@@ -2,7 +2,9 @@ defmodule Othello.GameServer do
   @moduledoc """
   A game server process that holds a `Game` struct as its state.
   """
-
+  # this is a thin module that delegates jobs to the game logic
+  # we took sequential code(i.e. game logic) and then made it concurrent by layering
+  # the genserver module
   use GenServer
 
   require Logger
@@ -10,6 +12,14 @@ defmodule Othello.GameServer do
   @timeout :timer.hours(2)
 
   # Client (Public) Interface
+
+  def child_spec(arg) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, arg},
+      restart: :transient
+    }
+  end
 
   @doc """
   Spawns a new game server process registered under the given `game_name`.
@@ -23,9 +33,9 @@ defmodule Othello.GameServer do
     GenServer.call(via_tuple(game_name), :summary)
   end
 
-  # def mark(game_name, phrase, player) do
-  #   GenServer.call(via_tuple(game_name), {:mark, phrase, player})
-  # end
+  def mark(game_name, phrase, player) do
+    GenServer.call(via_tuple(game_name), {:mark, phrase, player})
+  end
 
   @doc """
   Returns a tuple used to register and lookup a game server process by name.
@@ -49,6 +59,11 @@ defmodule Othello.GameServer do
   def init({game_name, size}) do
     buzzwords = Othello.BuzzwordCache.get_buzzwords()
 
+    # pattern matching cases on game name, if ets.lookup returns empty, then
+    # its a new game name, and thus create a new game and insert it into the
+    # ets table
+    # but if the game name already exists in the ets table, then just reload the
+    # game using the game state stored in the table
     game =
       case :ets.lookup(:games_table, game_name) do
         [] ->
@@ -69,13 +84,14 @@ defmodule Othello.GameServer do
     {:reply, summarize(game), game, @timeout}
   end
 
-  # def handle_call({:mark, phrase, player}, _from, game) do
-  #   new_game = Othello.Game.mark(game, phrase, player)
-  #
-  #   :ets.insert(:games_table, {my_game_name(), new_game})
-  #
-  #   {:reply, summarize(new_game), new_game, @timeout}
-  # end
+  # timeout : if no message received to a game in 2 hrs? then delete/terminate that game
+  def handle_call({:mark, phrase, player}, _from, game) do
+    new_game = Othello.Game.mark(game, phrase, player)
+
+    :ets.insert(:games_table, {my_game_name(), new_game})
+
+    {:reply, summarize(new_game), new_game, @timeout}
+  end
 
   def summarize(game) do
     %{
@@ -98,6 +114,9 @@ defmodule Othello.GameServer do
     :ok
   end
 
+  # Registry.keys returns the keys for the given pid
+  # will return list, but our ets table has unique keys, hence will always be
+  # a list with single value, hence get list.first
   defp my_game_name do
     Registry.keys(Othello.GameRegistry, self()) |> List.first()
   end
