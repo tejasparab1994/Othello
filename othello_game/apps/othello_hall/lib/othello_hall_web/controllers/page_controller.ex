@@ -14,6 +14,12 @@ defmodule OthelloHallWeb.PageController do
     |> redirect
   end
 
+  def delete(conn, _) do
+    conn
+    |> delete_session(:current_player)
+    |> redirect(to: "/")
+  end
+
   def redirect(conn) do
     path = get_session(conn, :return_to) || game_path(conn, :new)
 

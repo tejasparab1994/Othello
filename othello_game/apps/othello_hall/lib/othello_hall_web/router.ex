@@ -17,11 +17,11 @@ defmodule OthelloHallWeb.Router do
     # Use the default browser stack
     pipe_through(:browser)
 
-    get("/", GameController, :new)
+    get("/", PageController, :new)
 
     resources("/games", GameController, only: [:new, :create, :show])
 
-    resources("/pages", PageController, only: [:new, :create, :delete], singleton: true)
+    resources("/login", PageController, only: [:new, :create, :delete], singleton: true)
   end
 
   # Other scopes may use custom stacks.
