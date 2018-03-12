@@ -10,7 +10,7 @@ defmodule OthelloHallWeb.GameController do
   end
 
   def create(conn, _) do
-    game_name = "something"
+    game_name = OthelloHall.HaikuName.generate()
 
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->

@@ -8,19 +8,8 @@
                           placeholder: "Name",
                           autofocus: true,
                           required: true %>
-        <!-- <div id="color-selector">
-          <%= hidden_input f, :color, value: "#a4deff" %>
-          <span class="color selected" style="background-color: #a4deff"></span>
-          <span class="color" style="background-color: #f9cedf"></span>
-          <span class="color" style="background-color: #d3c5f1"></span>
-          <span class="color" style="background-color: #acc9f5"></span>
-          <span class="color" style="background-color: #aeeace"></span>
-          <span class="color" style="background-color: #96d7b9"></span>
-          <span class="color" style="background-color: #fce8bd"></span>
-          <span class="color" style="background-color: #fcd8ac"></span>
-        </div> -->
       </div>
-      <%= submit "Play Othello!", class: "btn btn-primary" %>
+      <%= submit "Enter Lobby", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
