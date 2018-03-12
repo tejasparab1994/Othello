@@ -34,6 +34,8 @@ defmodule Othello.Game do
       |> Enum.map(&Square.from_buzzword(&1))
       |> Enum.chunk_every(size)
 
+    IO.inspect(squares)
+
     %Game{squares: squares}
   end
 

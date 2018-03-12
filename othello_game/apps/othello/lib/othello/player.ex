@@ -1,11 +1,13 @@
 defmodule Othello.Player do
-  @enforce_keys [:name, :color]
-  defstruct [:name, :color]
+  @enforce_keys [:name]
+  # player1 or player2 thing.
+
+  defstruct [:name]
 
   @doc """
   Creates a player with the given `name` and `color`.
   """
-  def new(name, color) do
-    %Othello.Player{name: name, color: color}
+  def new(name) do
+    %Othello.Player{name: name}
   end
 end
