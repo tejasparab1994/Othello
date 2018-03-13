@@ -2,17 +2,17 @@
 
 export function fetchGames(lobbyChannel)  {
     return dispatch => {
-        lobbyChannel.on("update_games", payload => {
+        lobbyChannel.on("lobby:update_games", payload => {
             dispatch({
                 type: "current_games_set",
-                games: payload.games
+                games: []
             });
         });
 
-        lobbyChannel.push("current_games", payload => {
+        lobbyChannel.push("lobby:current_games", payload => {
            dispatch({
                type: "current_games_set",
-               games: payload.games
+               games: []
            });
         });
     }

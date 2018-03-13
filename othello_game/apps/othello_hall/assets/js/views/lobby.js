@@ -2,17 +2,18 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {fetchGames} from "../actions/lobby";
+import { withRouter } from 'react-router-dom';
 
-export class LobbyView extends React.Component  {
+class LobbyView extends React.Component  {
     componentDidMount() {
         console.log("Component is mounted. Thank God!!!");
-        // const {dispatch} = this.props;
-        // const playerName = window.playerName;
-        // const socket = new Socket("/socket", {params: {playerName: playerName}});
-        // socket.connect();
+        const {dispatch} = this.props;
+        const playerName = "sibendu";
+        const socket = new Socket("/socket", {params: {playerName: playerName}});
+        socket.connect();
         //
-        // let lobby = socket.channel("lobby:join");
-        // lobby.join();
+        let lobby = socket.channel("lobby:join");
+        lobby.join();
 
         dispatch(fetchGames(lobby))
 
@@ -28,6 +29,7 @@ export class LobbyView extends React.Component  {
     }
 
     renderCurrentGames()    {
+        console.log(this.props);
         const { games } = this.props;
 
         if (games.length == 0 ) return "No Games Currently being played";
@@ -37,7 +39,7 @@ export class LobbyView extends React.Component  {
             return (
                 <ListItem key={game.name} game={game}/>
             );
-        })
+        });
 
 
         return (
@@ -49,11 +51,12 @@ export class LobbyView extends React.Component  {
 }
 
 
-const map = (state) => (
-    { state }
-);
+function map(state){
+    console.log("connect map is called");
+    return Object.assign({}, state.lobby);
+}
 
-
+// export default withRouter(connect(map)(LobbyView));
 export default connect(map)(LobbyView);
 
 

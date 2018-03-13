@@ -4,10 +4,13 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {})  {
+    console.log("lobby reducer is called");
+
     switch(action.type) {
         case "current_games_set":
-            return state;
+            return Object.assign({}, state, { games: action.games});
         default:
-            return state;
+            console.log(state);
+            return Object.assign({}, state, {games: []});
     }
 }
