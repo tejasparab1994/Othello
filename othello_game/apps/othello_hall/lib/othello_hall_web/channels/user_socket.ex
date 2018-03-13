@@ -3,6 +3,7 @@ defmodule OthelloHallWeb.UserSocket do
 
   ## Channels
   channel("games:*", OthelloHallWeb.RoomChannel)
+  channel "lobby:*", OthelloHallWeb.LobbyChannel
 
   ## Transports
   transport(:websocket, Phoenix.Transports.WebSocket)

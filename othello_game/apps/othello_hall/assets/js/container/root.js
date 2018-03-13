@@ -1,19 +1,25 @@
 import React              from 'react';
 import { Provider }       from 'react-redux';
-import { Router }         from 'react-router';
+import { Router, Route }         from 'react-router';
 import invariant          from 'invariant';
 import { RoutingContext } from 'react-router';
-import configRoutes       from '../routes';
+import {MainLayout} from '../layout/index';
+import {LobbyView} from '../views/lobby';
+
 
 export default class Root extends React.Component {
     _renderRouter(store) {
+
+        console.log("Root is called");
         invariant(this.props.routerHistory,
-            '<Root /> needs either a routingContext or routerHistory to render.'
+             '<Root /> needs either a routingContext or routerHistory to render.'
         );
 
         return (
             <Router history={this.props.routerHistory}>
-                {configRoutes(store)}
+                <div>
+                    <Route path="/games/new" component={LobbyView}/>
+                </div>
             </Router>
         );
     }

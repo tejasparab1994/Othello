@@ -17,15 +17,15 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
-import socket from "./socket"
+// import socket from "./socket"
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
-import { browserHistory }       from 'react-router';
+import { createBrowserHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore           from './store';
 import Root                     from './container/root';
 
-
+const browserHistory = createBrowserHistory();
 const store  = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
