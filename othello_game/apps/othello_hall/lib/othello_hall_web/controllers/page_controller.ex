@@ -7,7 +7,6 @@ defmodule OthelloHallWeb.PageController do
 
   def create(conn, %{"player" => %{"name" => name}}) do
     player = Othello.Player.new(name)
-    IO.inspect(player)
 
     conn
     |> put_session(:current_player, player)

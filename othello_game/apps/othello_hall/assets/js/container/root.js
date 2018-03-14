@@ -19,6 +19,7 @@ export default class Root extends React.Component {
             <Router history={this.props.routerHistory}>
                 <div>
                     <Route path="/games/new" component={LobbyView}/>
+                    <Route path="/games/:id" component={GameView}/>
                 </div>
             </Router>
     );

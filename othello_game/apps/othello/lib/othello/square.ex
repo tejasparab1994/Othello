@@ -1,20 +1,30 @@
 defmodule Othello.Square do
-  @enforce_keys [:phrase, :points]
-  defstruct [:phrase, :points, :marked_by]
+
+  defstruct color: nil
 
   alias __MODULE__
 
   @doc """
   Creates a square from the given `phrase` and `points`.
   """
-  def new(phrase, points) do
-    %Square{phrase: phrase, points: points}
+  def new(color = "black") do
+    %Square{color: color}
+  end
+
+  def new(color = "white") do
+    %Square{color: color}
   end
 
   @doc """
-  Creates a square from the given map with `:phrase` and `:points` keys.
+  Creates a square from the given `phrase` and `points`.
   """
-  def from_buzzword(%{phrase: phrase, points: points}) do
-    Square.new(phrase, points)
+  def new() do
+    %Square{}
   end
+#  @doc """
+#  Creates a square from the given map with `:phrase` and `:points` keys.
+#  """
+#  def from_buzzword(%{phrase: phrase, points: points}) do
+#    Square.new(phrase, points)
+#  end
 end
