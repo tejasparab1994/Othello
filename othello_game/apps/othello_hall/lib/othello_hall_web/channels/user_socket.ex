@@ -3,6 +3,7 @@ defmodule OthelloHallWeb.UserSocket do
 
   ## Channels
   channel("games:*", OthelloHallWeb.RoomChannel)
+  channel "lobby:*", OthelloHallWeb.LobbyChannel
 
   ## Transports
   transport(:websocket, Phoenix.Transports.WebSocket)
@@ -19,15 +20,14 @@ defmodule OthelloHallWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(%{"token" => token}, socket) do
+  def connect(%{"playerName" => playerName}, socket) do
     # max_age: 86400 is equivalent to one day in seconds
-    case Phoenix.Token.verify(socket, "player auth", token, max_age: 86400) do
-      {:ok, player} ->
-        {:ok, assign(socket, :current_player, player)}
-
-      {:error, _reason} ->
-        :error
-    end
+#    case Phoenix.Token.verify(socket, "player auth", token, max_age: 86400) do
+#      {:ok, player} ->
+      {:ok, assign(socket, :current_player, playerName)}
+#      {:error, _reason} ->
+#        :error
+#    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
