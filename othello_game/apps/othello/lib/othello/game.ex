@@ -1,6 +1,6 @@
 defmodule Othello.Game do
   @enforce_keys [:squares]
-  defstruct squares: nil, scores: %{}, winner: nil
+  defstruct squares: nil, scores: %{}, winner: nil, inProgress: true
 
   alias Othello.{Buzzwords, Game, Square, OthelloChecker}
 

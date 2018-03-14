@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {fetchGames} from "../actions/lobby";
 import { withRouter } from 'react-router-dom';
+import { ListGame } from "../components/listgame"
 
 class LobbyView extends React.Component  {
     componentDidMount() {
@@ -23,7 +24,17 @@ class LobbyView extends React.Component  {
     render()    {
         return (
             <div id="current_games">
+                <table>
+                <tr>
+                    <th>
+                       Game Name
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
                 {this.renderCurrentGames()}
+                </table>
             </div>
         );
     }
@@ -37,17 +48,13 @@ class LobbyView extends React.Component  {
 
         const gamesList = games.map( game => {
             return (
-                <ListItem key={game.name} game={game}/>
+                <ListGame game={game}/>
             );
         });
 
-
-        return (
-            <div id = "games" >
-                {gamesList}
-            </div>
-        );
+        return gamesList
     }
+
 }
 
 

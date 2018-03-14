@@ -6,6 +6,7 @@ defmodule Othello.GameSupervisor do
   use DynamicSupervisor
 
   alias Othello.GameServer
+  alias OthelloHallWeb.LobbyChannel
 
   def start_link(_arg) do
     DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
@@ -36,10 +37,21 @@ defmodule Othello.GameSupervisor do
   @doc """
   gives the list of game names being supervised by the Gamesupervisor
   """
+#  def game_names do
+#    DynamicSupervisor.which_children(__MODULE__)
+#    |> Enum.map(fn {_, game_pid, _, _} ->
+#      Registry.keys(Othello.GameRegistry, game_pid) |> List.first()
+#    end)
+#    |> Enum.sort()
+#  end
+
   def game_names do
     DynamicSupervisor.which_children(__MODULE__)
     |> Enum.map(fn {_, game_pid, _, _} ->
-      Registry.keys(Othello.GameRegistry, game_pid) |> List.first()
+      keys = Registry.keys(Othello.GameRegistry, game_pid)
+      game_name = keys |> List.first
+      [{^game_name, game}] = :ets.lookup(:games_table, game_name)
+      %{ name: game_name, inProgress: game.inProgress }
     end)
     |> Enum.sort()
   end

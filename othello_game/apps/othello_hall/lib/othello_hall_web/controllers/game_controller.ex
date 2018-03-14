@@ -4,6 +4,7 @@ defmodule OthelloHallWeb.GameController do
   plug(:require_player)
 
   alias Othello.{GameServer, GameSupervisor}
+  alias OthelloHallWeb.LobbyChannel
 
   def new(conn, _) do
     render(conn, "new.html")
@@ -14,6 +15,7 @@ defmodule OthelloHallWeb.GameController do
 
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->
+        LobbyChannel.broadcast_current_games
         redirect(conn, to: game_path(conn, :show, game_name))
 
       {:error, _error} ->
