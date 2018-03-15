@@ -24,17 +24,17 @@ class LobbyView extends React.Component  {
     render()    {
         return (
             <div id="current_games">
-                <table>
+              <table>
                 <tr>
-                    <th>
-                       Game Name
-                    </th>
-                    <th>
+                  <th>
+                    Game Name
+                  </th>
+                  <th>
 
-                    </th>
+                  </th>
                 </tr>
                 {this.renderCurrentGames()}
-                </table>
+              </table>
             </div>
         );
     }
@@ -65,5 +65,3 @@ function map(state){
 
 // export default withRouter(connect(map)(LobbyView));
 export default connect(map)(LobbyView);
-
-

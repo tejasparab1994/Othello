@@ -1,3 +1,11 @@
+
+<script>
+  window.gameName = "<%= @game_name %>";
+  window.authToken = "<%= @auth_token %>";
+  window.wsUrl = "<%= ws_url() %>";
+</script>
+
 <div id="startGame">
   ...
+
 </div>

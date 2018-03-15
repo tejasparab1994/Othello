@@ -7,6 +7,11 @@ defmodule Othello.Player do
   @doc """
   Creates a player with the given `name` and `color`.
   """
+
+  def new(name) do
+    %Othello.Player{name: name}
+  end
+
   def new(name, color = "black") do
     %Othello.Player{name: name, color: color}
   end

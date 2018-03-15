@@ -10,12 +10,12 @@ export class ListGame extends React.Component {
     render() {
         return (
             <tr>
-                <td>
-                    {this.state.name}
-                </td>
-                <td>
-                    <Button>{ this.state.inProgress? "Spectate" : "Join" }</Button>
-                </td>
+              <td>
+                {this.state.name}
+              </td>
+              <td>
+                <Button>{ this.state.inProgress? "Spectate" : "Join" }</Button>
+              </td>
             </tr>
         );
     }

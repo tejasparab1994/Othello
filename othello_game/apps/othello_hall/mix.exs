@@ -44,6 +44,7 @@ defmodule OthelloHall.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:othello, path: "../othello"}
+      # {:othello, in_umbrella: true}
     ]
   end
 

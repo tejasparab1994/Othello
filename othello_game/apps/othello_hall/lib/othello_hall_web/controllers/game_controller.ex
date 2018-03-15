@@ -7,14 +7,24 @@ defmodule OthelloHallWeb.GameController do
   alias OthelloHallWeb.LobbyChannel
 
   def new(conn, _) do
+    # current_player = get_session(conn, :current_player)
+    # current_player = %{current_player | color: nil}
+    # IO.inspect("this is nil player")
+    # IO.inspect(current_player.color)
     render(conn, "new.html")
   end
 
   def create(conn, _) do
     game_name = OthelloHall.HaikuName.generate()
+    IO.inspect("this is current player")
+    current_player = get_session(conn, :current_player)
+    IO.inspect(current_player.color)
+    current_player = %{current_player | color: "black"}
+    IO.inspect(current_player)
+
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->
-        LobbyChannel.broadcast_current_games
+        LobbyChannel.broadcast_current_games()
         redirect(conn, to: game_path(conn, :show, game_name))
 
       {:error, _error} ->
