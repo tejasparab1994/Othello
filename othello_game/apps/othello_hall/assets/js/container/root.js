@@ -6,7 +6,7 @@ import invariant from 'invariant';
 import {RoutingContext} from 'react-router';
 // import {MainLayout} from '../layout/index';
 import LobbyView from '../views/lobby';
-
+import GameView from '../views/game';
 
 export default class Root extends React.Component {
     _renderRouter() {
@@ -18,8 +18,9 @@ export default class Root extends React.Component {
         return (
             <Router history={this.props.routerHistory}>
               <div>
-                <Route path="/games/new" component={LobbyView}/>
-                {/* <Route path="/games/:id" component={GameView}/> */}
+                <Route path="/lobby" component={LobbyView}/>
+                <Route path="/games/:gameName" render={(props) =>
+                { return <GameView gameName={props.match.params.gameName} /> }} />
                 </div>
             </Router>
     );

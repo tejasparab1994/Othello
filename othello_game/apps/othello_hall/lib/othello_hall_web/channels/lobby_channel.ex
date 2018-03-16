@@ -5,9 +5,6 @@ defmodule OthelloHallWeb.LobbyChannel do
 
   def join("lobby:join", payload, socket) do
     if authorized?(payload) do
-      # IO.inspect("this is socket")
-      # IO.inspect(socket)
-
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -31,9 +28,9 @@ defmodule OthelloHallWeb.LobbyChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("lobby:new_game", payload, socket) do
-    game_names = GameSupervisor.game_names()
-    IO.inspect(game_names)
-    {:reply, {:ok, %{current_games: game_names}}, socket}
+    IO.puts "Request for new game"
+#    IO.inspect(game_names)
+    {:reply, {:ok, %{current_games: %{}}}, socket}
   end
 
   # It is also common to receive messages from the client and

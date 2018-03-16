@@ -10,13 +10,17 @@ defmodule OthelloHallWeb.PageController do
 
     conn
     |> put_session(:current_player, player)
-    |> redirect
+    |> redirect(to: page_path(conn, :lobby))
   end
 
   def delete(conn, _) do
     conn
     |> delete_session(:current_player)
     |> redirect(to: "/")
+  end
+
+  def lobby(conn, _params) do
+    render conn, "lobby.html", current_player: get_session(conn, :current_player)
   end
 
   def redirect(conn) do

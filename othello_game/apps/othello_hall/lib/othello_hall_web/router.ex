@@ -18,6 +18,7 @@ defmodule OthelloHallWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :new)
+    get("/lobby", PageController, :lobby)
 
     resources("/games", GameController, only: [:new, :create, :show])
 
