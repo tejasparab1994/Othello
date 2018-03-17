@@ -19,6 +19,11 @@ defmodule OthelloHall.ChannelMonitor do
 
   # GenServer implementation
   def handle_call({:user_joined, channel, user}, _from, state) do
+    IO.inspect("-------STATE-------")
+    IO.inspect(state)
+    IO.inspect("-----Channel")
+    IO.inspect(channel)
+
     new_state =
       case Map.get(state, channel) do
         nil ->
@@ -41,7 +46,11 @@ defmodule OthelloHall.ChannelMonitor do
       |> Map.get(channel)
       |> Enum.reject(&(&1.id == user_id))
 
-    new_state = Map.update!(state, channel, fn _ -> new_users end)
+    if Enum.empty?(new_users) do
+      new_state = Map.delete(state, channel)
+    else
+      new_state = Map.update!(state, channel, fn _ -> new_users end)
+    end
 
     {:reply, new_state, new_state}
   end

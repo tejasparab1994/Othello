@@ -7,10 +7,6 @@ defmodule OthelloHallWeb.GameController do
   alias OthelloHallWeb.LobbyChannel
 
   def new(conn, _) do
-    # current_player = get_session(conn, :current_player)
-    # current_player = %{current_player | color: nil}
-    # IO.inspect("this is nil player")
-    # IO.inspect(current_player.color)
     render(conn, "new.html")
   end
 
