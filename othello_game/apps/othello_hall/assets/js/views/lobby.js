@@ -8,16 +8,15 @@ import {NewGame} from "../components/newgame"
 class LobbyView extends React.Component {
     componentDidMount() {
         console.log("Component is mounted. Thank God!!!");
-        const {dispatch} = this.props;
-        console.log("Player name is :" + window.playerName);
-        const socket = new Socket("/socket", {params: {playerName: window.playerName}});
-        socket.connect();
+        const {dispatch, lobby} = this.props;
 
-
-        let lobby = socket.channel("lobby:join");
-        lobby.join();
-
-        dispatch(fetchGames(lobby))
+        if (lobby == null) {
+            const socket = new Socket("/socket", {params: {playerName: window.playerName}});
+            socket.connect();
+            let lobby = socket.channel("lobby:join");
+            lobby.join();
+            dispatch(fetchGames(lobby))
+        } else dispatch(fetchGames(lobby));
     }
 
     render() {

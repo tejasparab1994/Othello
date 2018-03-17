@@ -26,17 +26,16 @@ export function fetchGames(lobbyChannel)  {
     }
 }
 
-export function newGame(lobbyChannel)   {
-    console.log("new game is called");
-    return (dispatch) => {
-        lobbyChannel.push("lobby:new_game").receive("ok", payload => {
-            dispatch({
-                type: "new_game_created",
-                gameName: payload.gameName
-            });
-            window.location.replace(window.location.protocol + "//" + window.location.hostname + ":" +
-                window.location.port + "/" + "game");
-            // dispatch(push(`/game`));
-        });
-    }
-}
+// export function newGame(lobbyChannel)   {
+//     console.log("new game is called");
+//     return (dispatch) => {
+//         lobbyChannel.push("lobby:new_game").receive("ok", payload => {
+//             dispatch({
+//                 type: "new_game_created",
+//                 gameName: payload.gameName
+//             });
+//             window.location.replace(window.location.protocol + "//" + window.location.hostname + ":" +
+//                 window.location.port + "/" + "game");
+//             // dispatch(push(`/game`));
+//         });
+//     }

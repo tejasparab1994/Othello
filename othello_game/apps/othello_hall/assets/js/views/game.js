@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
+import {registerForGame}  from "../actions/game";
 
 class Game extends React.Component{
 
@@ -8,7 +9,18 @@ class Game extends React.Component{
         super(props);
     }
     componentDidMount() {
-        
+        const {dispatch, gameChannel} = this.props;
+
+        if (!gameChannel) {
+            const socket = new Socket("/socket", {params: {playerName: window.playerName}});
+            socket.connect();
+            let gameChannel = socket.channel("games:" + this.props.gameName);
+            gameChannel.join();
+            dispatch(registerForGame(gameChannel));
+        }
+        else
+            dispatch(registerForGame(gameChannel));
+
     }
 
     render()    {
