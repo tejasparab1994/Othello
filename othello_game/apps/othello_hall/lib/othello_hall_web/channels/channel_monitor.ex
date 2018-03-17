@@ -13,8 +13,8 @@ defmodule OthelloHall.ChannelMonitor do
     GenServer.call(__MODULE__, {:users_in_channel, channel})
   end
 
-  def user_left(channel, user_id) do
-    GenServer.call(__MODULE__, {:user_left, channel, user_id})
+  def user_left(channel, user) do
+    GenServer.call(__MODULE__, {:user_left, channel, user})
   end
 
   # --------------------------------------------------------------------------
@@ -41,12 +41,12 @@ defmodule OthelloHall.ChannelMonitor do
     {:reply, Map.get(state, channel), state}
   end
 
-  # how will this work? 
-  def handle_call({:user_left, channel, user_id}, _from, state) do
+  # how will this work?
+  def handle_call({:user_left, channel, user}, _from, state) do
     new_users =
       state
       |> Map.get(channel)
-      |> Enum.reject(&(&1.id == user_id))
+      |> Enum.reject(&(&1.name == user.name))
 
     if Enum.empty?(new_users) do
       new_state = Map.delete(state, channel)

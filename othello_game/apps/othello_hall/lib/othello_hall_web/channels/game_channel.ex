@@ -1,5 +1,5 @@
 defmodule OthelloWeb.GameChannel do
-  use OthelloWeb, :channel
+  use OthelloHallWeb, :channel
 
   alias OthelloWeb.ChannelMonitor
   alias Othello.GameSupervisor, as: GameSupervisor
@@ -9,8 +9,9 @@ defmodule OthelloWeb.GameChannel do
 
   def join("games:" <> game_name, _params, socket) do
     Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
-    IO.inspect(current_player)
+
     current_player = current_player(socket)
+    IO.inspect(current_player)
 
     users =
       ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
@@ -42,14 +43,14 @@ defmodule OthelloWeb.GameChannel do
   end
 
   def terminate(reason, socket) do
-    Logger.debug("Terminating GameChannel #{socket.assigns.game_id} #{inspect(reason)}")
+    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
 
     current_player = current_player(socket)
     game_name = socket.assigns.game_name
 
-    case Game.player_left(game_id, player_id) do
+    case Game.player_left(game_name, current_player) do
       {:ok, game} ->
-        GameSupervisor.stop_game(game_id)
+        GameSupervisor.stop_game(game_name)
 
         broadcast(socket, "game:over", %{game: game})
         broadcast(socket, "game:player_left", %{current_player: current_player})
