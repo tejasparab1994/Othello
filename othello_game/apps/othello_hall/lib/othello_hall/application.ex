@@ -9,11 +9,11 @@ defmodule OthelloHall.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-#      supervisor(OthelloHall.Repo, []),
+      #      supervisor(OthelloHall.Repo, []),
       # Start the endpoint when the application starts
       supervisor(OthelloHallWeb.Endpoint, []),
       # Start your own worker by calling: OthelloHall.Worker.start_link(arg1, arg2, arg3)
-      # worker(OthelloHall.Worker, [arg1, arg2, arg3]),
+      worker(OthelloHall.ChannelMonitor, [%{}])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

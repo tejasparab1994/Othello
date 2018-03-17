@@ -16,11 +16,12 @@ defmodule OthelloHallWeb.PageController do
   def delete(conn, _) do
     conn
     |> delete_session(:current_player)
+    |> put_flash(:info, "Switch Player")
     |> redirect(to: "/")
   end
 
   def lobby(conn, _params) do
-    render conn, "lobby.html", current_player: get_session(conn, :current_player)
+    render(conn, "lobby.html", current_player: get_session(conn, :current_player))
   end
 
   def redirect(conn) do

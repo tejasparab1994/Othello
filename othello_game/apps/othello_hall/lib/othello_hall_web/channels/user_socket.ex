@@ -3,7 +3,7 @@ defmodule OthelloHallWeb.UserSocket do
 
   ## Channels
   channel("games:*", OthelloHallWeb.RoomChannel)
-  channel "lobby:*", OthelloHallWeb.LobbyChannel
+  channel("lobby:*", OthelloHallWeb.LobbyChannel)
 
   ## Transports
   transport(:websocket, Phoenix.Transports.WebSocket)
@@ -22,17 +22,19 @@ defmodule OthelloHallWeb.UserSocket do
   # performing token verification on connect.
   def connect(%{"playerName" => playerName}, socket) do
     # max_age: 86400 is equivalent to one day in seconds
-#    case Phoenix.Token.verify(socket, "player auth", token, max_age: 86400) do
-#      {:ok, player} ->
-      {:ok, assign(socket, :current_player, playerName)}
-#      {:error, _reason} ->
-#        :error
-#    end
+    #    case Phoenix.Token.verify(socket, "player auth", token, max_age: 86400) do
+    #      {:ok, player} ->
+    {:ok, assign(socket, :current_player, playerName)}
+    #      {:error, _reason} ->
+    #        :error
+    #    end
   end
+
+  def connet(_, _socket), do: :error
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
-  #     def id(socket), do: "user_socket:#{socket.assigns.user_id}"
+  def id(socket), do: "user_socket:#{socket.assigns.current_player}"
   #
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
