@@ -9,13 +9,15 @@ defmodule OthelloWeb.GameChannel do
 
   def join("games:" <> game_name, _params, socket) do
     Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
-    IO.inspect(current_user)
-    current_user = socket.assigns.current_user
-    users = ChannelMonitor.user_joined("games:" <> game_name, current_user)["games:" <> game_name]
+    IO.inspect(current_player)
+    current_player = current_player(socket)
+
+    users =
+      ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
 
     case GameServer.game_pid(game_name) do
       pid when is_pid(pid) ->
-        send(self(), {:after_join, game_name, current_user})
+        send(self(), {:after_join, game_name, current_player})
         {:ok, assign(socket, :game_name, game_name)}
 
       nil ->
@@ -23,12 +25,12 @@ defmodule OthelloWeb.GameChannel do
     end
   end
 
-  def handle_info({:after_join, game_name, current_user}, socket) do
+  def handle_info({:after_join, game_name, current_player}, socket) do
     summary = GameServer.summary(game_name)
 
     push(socket, "game_summary", summary)
     push(socket, "presence_state", Presence.list(socket))
-    broadcast!(socket, "user:joined", %{users: connected_users})
+    broadcast!(socket, "user:joined", %{users: current_player})
 
     {:ok, _} =
       Presence.track(socket, current_player(socket).name, %{
@@ -37,6 +39,26 @@ defmodule OthelloWeb.GameChannel do
       })
 
     {:noreply, socket}
+  end
+
+  def terminate(reason, socket) do
+    Logger.debug("Terminating GameChannel #{socket.assigns.game_id} #{inspect(reason)}")
+
+    current_player = current_player(socket)
+    game_name = socket.assigns.game_name
+
+    case Game.player_left(game_id, player_id) do
+      {:ok, game} ->
+        GameSupervisor.stop_game(game_id)
+
+        broadcast(socket, "game:over", %{game: game})
+        broadcast(socket, "game:player_left", %{current_player: current_player})
+
+        :ok
+
+      _ ->
+        :ok
+    end
   end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do

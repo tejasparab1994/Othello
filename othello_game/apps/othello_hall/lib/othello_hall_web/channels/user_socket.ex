@@ -30,7 +30,7 @@ defmodule OthelloHallWeb.UserSocket do
     #    end
   end
 
-  def connet(_, _socket), do: :error
+  def connect(_, _socket), do: :error
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #

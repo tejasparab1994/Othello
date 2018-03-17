@@ -17,11 +17,12 @@ defmodule OthelloHall.ChannelMonitor do
     GenServer.call(__MODULE__, {:user_left, channel, user_id})
   end
 
+  # --------------------------------------------------------------------------
   # GenServer implementation
   def handle_call({:user_joined, channel, user}, _from, state) do
     IO.inspect("-------STATE-------")
     IO.inspect(state)
-    IO.inspect("-----Channel")
+    IO.inspect("-----Channel-------")
     IO.inspect(channel)
 
     new_state =
@@ -40,6 +41,7 @@ defmodule OthelloHall.ChannelMonitor do
     {:reply, Map.get(state, channel), state}
   end
 
+  # how will this work? 
   def handle_call({:user_left, channel, user_id}, _from, state) do
     new_users =
       state
