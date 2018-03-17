@@ -27,9 +27,28 @@ defmodule OthelloWeb.GameChannel do
     summary = GameServer.summary(game_name)
 
     push(socket, "game_summary", summary)
-
+    push(socket, "presence_state", Presence.list(socket))
     broadcast!(socket, "user:joined", %{users: connected_users})
 
+    {:ok, _} =
+      Presence.track(socket, current_player(socket).name, %{
+        online_at: inspect(System.system_time(:seconds)),
+        color: current_player(socket).color
+      })
+
     {:noreply, socket}
+  end
+
+  def handle_in("new_chat_message", %{"body" => body}, socket) do
+    broadcast!(socket, "new_chat_message", %{
+      name: current_player(socket).name,
+      body: body
+    })
+
+    {:noreply, socket}
+  end
+
+  defp current_player(socket) do
+    socket.assigns.current_player
   end
 end
