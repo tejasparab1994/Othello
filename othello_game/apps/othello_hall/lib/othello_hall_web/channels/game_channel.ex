@@ -45,25 +45,25 @@ defmodule OthelloHallWeb.GameChannel do
     {:noreply, socket}
   end
 
-  def terminate(reason, socket) do
-    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
-    IO.inspect("in here? right now?")
-    current_player = current_player(socket)
-    game_name = socket.assigns.game_name
-
-    case Game.player_left(game_name, current_player) do
-      {:ok, game} ->
-        GameSupervisor.stop_game(game_name)
-
-        broadcast(socket, "game:over", %{game: game})
-        broadcast(socket, "game:player_left", %{current_player: current_player})
-
-        :ok
-
-      _ ->
-        :ok
-    end
-  end
+  # def terminate(reason, socket) do
+  #   Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
+  #   IO.inspect("in here? right now?")
+  #   current_player = current_player(socket)
+  #   game_name = socket.assigns.game_name
+  #
+  #   case Game.player_left(game_name, current_player) do
+  #     {:ok, game} ->
+  #       GameSupervisor.stop_game(game_name)
+  #
+  #       broadcast(socket, "game:over", %{game: game})
+  #       broadcast(socket, "game:player_left", %{current_player: current_player})
+  #
+  #       :ok
+  #
+  #     _ ->
+  #       :ok
+  #   end
+  # end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do
     broadcast!(socket, "new_chat_message", %{
