@@ -3,7 +3,7 @@ defmodule OthelloHallWeb.GameChannel do
 
   alias OthelloWeb.ChannelMonitor
   alias Othello.GameSupervisor, as: GameSupervisor
-  alias OthelloWeb.LobbyChannel
+  alias OthelloHallWeb.LobbyChannel
   alias Othello.GameServer
   require Logger
 
@@ -18,12 +18,10 @@ defmodule OthelloHallWeb.GameChannel do
 
     case GameServer.game_pid(game_name) do
       pid when is_pid(pid) ->
-        IO.puts "Found game"
 #        send(self(), {:after_join, game_name, current_player})
         {:ok, assign(socket, :game_name, game_name)}
 
       nil ->
-        IO.puts "Error in joining game"
         {:error, %{reason: "Game does not exist"}}
     end
   end
@@ -44,25 +42,33 @@ defmodule OthelloHallWeb.GameChannel do
     {:noreply, socket}
   end
 
-#  def terminate(reason, socket) do
-#    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
-#
-#    current_player = current_player(socket)
-#    game_name = socket.assigns.game_name
-#
-#    case Game.player_left(game_name, current_player) do
-#      {:ok, game} ->
-#        GameSupervisor.stop_game(game_name)
-#
-#        broadcast(socket, "game:over", %{game: game})
-#        broadcast(socket, "game:player_left", %{current_player: current_player})
-#
-#        :ok
-#
-#      _ ->
-#        :ok
-#    end
-#  end
+  def handle_in("games:register_for_game", _payload, socket) do
+    game_name = socket.assigns.game_name
+    summary = GameServer.summary(game_name)
+    current_player = socket.assigns.current_player
+    {:reply, {:ok, %{gameData: summary}}, socket}
+  end
+
+
+  def terminate(reason, socket) do
+    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
+
+    current_player = current_player(socket)
+    game_name = socket.assigns.game_name
+
+    case Game.player_left(game_name, current_player) do
+      {:ok, game} ->
+        GameSupervisor.stop_game(game_name)
+
+        broadcast(socket, "game:over", %{game: game})
+        broadcast(socket, "game:player_left", %{current_player: current_player})
+
+        :ok
+
+      _ ->
+        :ok
+    end
+  end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do
     broadcast!(socket, "new_chat_message", %{
