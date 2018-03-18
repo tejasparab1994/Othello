@@ -3,14 +3,15 @@ import React from 'react';
 import { push }       from 'react-router-redux';
 import lobby from "../views/lobby";
 
-export function fetchGames(lobbyChannel)  {
+export function fetchGames(lobbyChannel, socket)  {
     return dispatch => {
         lobbyChannel.on("update_games", payload => {
             console.log("update_games is called");
             dispatch({
                 type: "current_games_set",
                 games: payload.current_games,
-                lobby: lobbyChannel
+                lobby: lobbyChannel,
+                socket: socket
             });
         });
 
@@ -20,7 +21,8 @@ export function fetchGames(lobbyChannel)  {
             dispatch({
                 type: "current_games_set",
                 games: payload.current_games,
-                lobby: lobbyChannel
+                lobby: lobbyChannel,
+                socket: socket
             });
         });
     }

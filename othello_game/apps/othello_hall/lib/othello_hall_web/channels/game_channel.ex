@@ -1,4 +1,4 @@
-defmodule OthelloWeb.GameChannel do
+defmodule OthelloHallWeb.GameChannel do
   use OthelloHallWeb, :channel
 
   alias OthelloWeb.ChannelMonitor
@@ -8,20 +8,22 @@ defmodule OthelloWeb.GameChannel do
   require Logger
 
   def join("games:" <> game_name, _params, socket) do
-    Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
+#    Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
 
     current_player = current_player(socket)
     IO.inspect(current_player)
 
-    users =
-      ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
+#    users =
+#      ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
 
     case GameServer.game_pid(game_name) do
       pid when is_pid(pid) ->
-        send(self(), {:after_join, game_name, current_player})
+        IO.puts "Found game"
+#        send(self(), {:after_join, game_name, current_player})
         {:ok, assign(socket, :game_name, game_name)}
 
       nil ->
+        IO.puts "Error in joining game"
         {:error, %{reason: "Game does not exist"}}
     end
   end
@@ -42,25 +44,25 @@ defmodule OthelloWeb.GameChannel do
     {:noreply, socket}
   end
 
-  def terminate(reason, socket) do
-    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
-
-    current_player = current_player(socket)
-    game_name = socket.assigns.game_name
-
-    case Game.player_left(game_name, current_player) do
-      {:ok, game} ->
-        GameSupervisor.stop_game(game_name)
-
-        broadcast(socket, "game:over", %{game: game})
-        broadcast(socket, "game:player_left", %{current_player: current_player})
-
-        :ok
-
-      _ ->
-        :ok
-    end
-  end
+#  def terminate(reason, socket) do
+#    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
+#
+#    current_player = current_player(socket)
+#    game_name = socket.assigns.game_name
+#
+#    case Game.player_left(game_name, current_player) do
+#      {:ok, game} ->
+#        GameSupervisor.stop_game(game_name)
+#
+#        broadcast(socket, "game:over", %{game: game})
+#        broadcast(socket, "game:player_left", %{current_player: current_player})
+#
+#        :ok
+#
+#      _ ->
+#        :ok
+#    end
+#  end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do
     broadcast!(socket, "new_chat_message", %{

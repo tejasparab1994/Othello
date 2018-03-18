@@ -1,8 +1,7 @@
 
 <script>
   window.gameName = "<%= @game_name %>";
-  window.authToken = "<%= @auth_token %>";
-  window.wsUrl = "<%= ws_url() %>";
+  window.playerName = '<%= @current_player.name %>'
 </script>
 
 <div id="startGame">

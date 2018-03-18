@@ -1,15 +1,18 @@
-
 const initialState = {
     games: [],
-    lobby:  null
+    lobby: null,
+    playerName: null
 };
 
-export default function reducer(state = initialState, action = {})  {
-    console.log("lobby reducer is called");
-
-    switch(action.type) {
+export default function reducer(state = initialState, action = {}) {
+    switch (action.type) {
         case "current_games_set":
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            return Object.assign({}, state, { games: action.games, lobby: action.lobby});
+            return Object.assign({}, state, {
+                games: action.games,
+                lobby: action.lobby,
+                socket: action.socket,
+                playerName: window.playerName
+            });
         default:
             return Object.assign({}, state, {games: []});
     }

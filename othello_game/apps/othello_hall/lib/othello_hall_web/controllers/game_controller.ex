@@ -21,6 +21,7 @@ defmodule OthelloHallWeb.GameController do
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->
         LobbyChannel.broadcast_current_games()
+        current_player =
         redirect(conn, to: game_path(conn, :show, game_name))
 
       {:error, _error} ->
@@ -36,7 +37,7 @@ defmodule OthelloHallWeb.GameController do
         conn
         |> assign(:game_name, game_name)
         |> assign(:auth_token, generate_auth_token(conn))
-        |> render("show.html")
+        |> render("show.html", current_player: get_session(conn, :current_player))
 
       nil ->
         conn
