@@ -5,6 +5,7 @@ import {fetchGames} from "../actions/lobby";
 import {ListGame} from "../components/listgame"
 import {NewGame} from "../components/newgame"
 
+
 class LobbyView extends React.Component {
     componentDidMount() {
         console.log("Component is mounted. Thank God!!!");

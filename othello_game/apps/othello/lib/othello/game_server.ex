@@ -33,6 +33,10 @@ defmodule Othello.GameServer do
     GenServer.call(via_tuple(game_name), :summary)
   end
 
+  def assign_player(game_name, playerName) do
+    GenServer.call(via_tuple(game_name), {:assign_player, playerName})
+  end
+
   def mark(game_name, phrase, player) do
     GenServer.call(via_tuple(game_name), {:mark, phrase, player})
   end
@@ -87,6 +91,18 @@ defmodule Othello.GameServer do
   # timeout : if no message received to a game in 2 hrs? then delete/terminate that game
   def handle_call({:mark, phrase, player}, _from, game) do
     new_game = Othello.Game.mark(game, phrase, player)
+
+    :ets.insert(:games_table, {my_game_name(), new_game})
+
+    {:reply, summarize(new_game), new_game, @timeout}
+  end
+
+  def handle_call({:assign_player, playerName}, _from, game) do
+    IO.puts "Game server handle_call is called for assigning player"
+    IO.inspect game
+    new_game = Othello.Game.assign_player(game, playerName)
+
+    IO.inspect new_game
 
     :ets.insert(:games_table, {my_game_name(), new_game})
 

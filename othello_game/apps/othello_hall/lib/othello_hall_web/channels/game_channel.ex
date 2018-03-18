@@ -42,32 +42,37 @@ defmodule OthelloHallWeb.GameChannel do
     {:noreply, socket}
   end
 
+  def broadcast_current_game(gameName, game) do
+
+  end
+
   def handle_in("games:register_for_game", _payload, socket) do
     game_name = socket.assigns.game_name
-    summary = GameServer.summary(game_name)
     current_player = socket.assigns.current_player
+    summary = GameServer.assign_player(game_name, current_player)
+    OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
     {:reply, {:ok, %{gameData: summary}}, socket}
   end
 
 
-  def terminate(reason, socket) do
+ def terminate(reason, socket) do
     Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
 
     current_player = current_player(socket)
     game_name = socket.assigns.game_name
 
-    case Game.player_left(game_name, current_player) do
-      {:ok, game} ->
+#    case Game.player_left(game_name, current_player) do
+#      {:ok, game} ->
         GameSupervisor.stop_game(game_name)
 
-        broadcast(socket, "game:over", %{game: game})
-        broadcast(socket, "game:player_left", %{current_player: current_player})
+#        broadcast(socket, "game:over", %{game: game})
+#        broadcast(socket, "game:player_left", %{current_player: current_player})
 
+#        :ok
+       LobbyChannel.broadcast_current_games()
+#      _ ->
         :ok
-
-      _ ->
-        :ok
-    end
+#    end
   end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do

@@ -7,7 +7,7 @@ defmodule Othello.Game do
             player1: nil,
             player2: nil
 
-  alias Othello.{Buzzwords, Game, Square, OthelloChecker}
+  alias Othello.{Buzzwords, Game, Square, OthelloChecker, Player}
 
   # @doc """
   # Creates a game with a `size` x `size` collection of squares
@@ -40,6 +40,17 @@ defmodule Othello.Game do
 
     %Game{squares: squares}
   end
+
+  def assign_player(game, playerName) do
+    newgame = case game do
+      %Game{ :player1 => nil } -> %{game | player1: %Player{ name: playerName, color: "black"}}
+      %Game{ :player2 => nil } ->
+        newgame = %{game | player2: %Player{name: playerName, color: "white"}}
+        newgame = %{game | inProgress: true}
+      true -> game
+    end
+  end
+
 
 #  @doc """
 #  Marks the square that has the given `phrase` for the given `player`,

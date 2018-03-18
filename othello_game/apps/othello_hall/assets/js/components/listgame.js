@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from 'reactstrap';
+
 export class ListGame extends React.Component {
 
     constructor(props) {
@@ -10,13 +10,21 @@ export class ListGame extends React.Component {
     render() {
         return (
             <tr>
-              <td>
-                {this.state.name}
-              </td>
-              <td>
-                <Button>{ this.state.inProgress? "Spectate" : "Join" }</Button>
-              </td>
+                <td>
+                    {this.state.name}
+                </td>
+                <td>
+                    <a href={getLink(this.state.name)} class="btn btn-info" role="button">
+                        {!this.state.inProgress ? "Join" : "Spectate"}
+                    </a>
+                </td>
             </tr>
         );
     }
+}
+
+
+function getLink(gameName) {
+    console.log("Get Link is called");
+    return "/games/" + gameName;
 }
