@@ -13,7 +13,7 @@ defmodule OthelloHall.Application do
       # Start the endpoint when the application starts
       supervisor(OthelloHallWeb.Endpoint, []),
       # Start your own worker by calling: OthelloHall.Worker.start_link(arg1, arg2, arg3)
-      worker(OthelloHall.ChannelMonitor, [%{}]),
+      worker(OthelloHallWeb.ChannelMonitor, [%{}]),
       supervisor(OthelloHallWeb.Presence, [])
     ]
 

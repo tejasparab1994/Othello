@@ -1,5 +1,8 @@
-defmodule OthelloHall.ChannelMonitor do
+defmodule OthelloHallWeb.ChannelMonitor do
   use GenServer
+
+  # channels
+  initial_state = %{}
 
   def start_link(initial_state) do
     GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)
