@@ -10,14 +10,14 @@ export class ListGame extends React.Component {
     render() {
         return (
             <tr>
-                <td>
-                    {this.state.name}
-                </td>
-                <td>
-                    <a href={getLink(this.state.name)} class="btn btn-info" role="button">
-                        {!this.state.inProgress ? "Join" : "Spectate"}
-                    </a>
-                </td>
+              <td>
+                {this.state.name}
+              </td>
+              <td>
+                <a href={getLink(this.state.name)} class="btn btn-info" role="button">
+                  {!this.state.inProgress ? "Join" : "Spectate"}
+                </a>
+              </td>
             </tr>
         );
     }

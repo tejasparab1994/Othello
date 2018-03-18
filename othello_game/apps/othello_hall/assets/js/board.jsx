@@ -7,7 +7,9 @@ class Board extends Component {
   renderRow(r) {
     var row = [];
     for (var i = 0; i < 8; i++) {
-      // remove this multiplied by 8 if you want [0,0] functionality
+      // remove this multiplied by 8 and do ri if you want squares of each
+      // row to be 00 01 02... so on functionality
+      // i have ran this using a basic react project and have created a basic table grid
       // right now the squares are numbered from 0 to 63 from left to right
       row.push(this.renderSquare(r*8+i));
     }
