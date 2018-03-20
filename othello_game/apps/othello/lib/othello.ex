@@ -6,7 +6,6 @@ defmodule Othello do
   def start(_type, _args) do
     children = [
       {Registry, keys: :unique, name: Othello.GameRegistry},
-      Othello.BuzzwordCache,
       Othello.GameSupervisor
     ]
 

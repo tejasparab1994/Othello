@@ -61,8 +61,6 @@ defmodule Othello.GameServer do
   # Server Callbacks
 
   def init({game_name, size}) do
-    buzzwords = Othello.BuzzwordCache.get_buzzwords()
-
     # pattern matching cases on game name, if ets.lookup returns empty, then
     # its a new game name, and thus create a new game and insert it into the
     # ets table

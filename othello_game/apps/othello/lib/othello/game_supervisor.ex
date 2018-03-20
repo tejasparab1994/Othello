@@ -46,8 +46,6 @@ defmodule Othello.GameSupervisor do
   #  end
 
   def game_names do
-    IO.puts("inside game_Names")
-
     DynamicSupervisor.which_children(__MODULE__)
     |> Enum.map(fn {_, game_pid, _, _} ->
       keys = Registry.keys(Othello.GameRegistry, game_pid)
