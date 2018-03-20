@@ -1,7 +1,8 @@
 
+
 const initialState = {
     gameName: null,
-    gameData: null
+    gameData: null,
 };
 
 export default function reducer(state = initialState, action = {})   {
