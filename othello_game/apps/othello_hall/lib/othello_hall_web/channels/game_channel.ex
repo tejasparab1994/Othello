@@ -54,6 +54,15 @@ defmodule OthelloHallWeb.GameChannel do
     {:reply, {:ok, %{gameData: summary}}, socket}
   end
 
+  def handle_in("games:mark_square", %{"i" => i, "j" => j}, socket) do
+    IO.puts "Payload is"
+    game_name = socket.assigns.game_name
+    current_player = socket.assigns.current_player
+    summary = GameServer.mark_square(game_name, current_player,i, j)
+    OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
+    {:reply, {:ok, %{gameData: summary}}, socket}
+  end
+
 
  def terminate(reason, socket) do
     Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")

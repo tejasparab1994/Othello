@@ -53,6 +53,10 @@ defmodule Othello.Game do
     end
   end
 
+  def mark_square(game, playerName, i, j) do
+    game
+  end
+
 
   #  @doc """
   #  Marks the square that has the given `phrase` for the given `player`,

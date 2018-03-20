@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
-import {registerForGame} from "../actions/game";
+import {registerForGame, markSquare} from "../actions/game";
 
 class Game extends React.Component {
 
@@ -26,7 +26,10 @@ class Game extends React.Component {
         return (
             <div className ="game" key ='game'>
                 <div className = "game-board" key='game-board'>
-                    <Board squares={this.props.gameData.squares} onClick={(i) => this.handleClick(i)} />
+                    <Board dispatch={this.props.dispatch}
+                           squares={this.props.gameData.squares}
+                           gameChannel = {this.props.gameChannel}
+                           onClick={(i) => this.handleClick(i)} />
                 </div>
                 <div className= 'game-info'>
                     <div>{status}</div>
@@ -48,17 +51,17 @@ class Square extends React.Component {
     }
 
     Click(){
-
+        this.state.dispatch(markSquare(this.state.value.i, this.state.value.j, this.state.gameChannel))
     }
 
     renderDisc() {
-        if(this.state.color == null) {
+        if(this.state.value.color == null) {
             return "";
         }
-        if(this.state.color === "white") {
+        if(this.state.value.color === "white") {
             return white;
         }
-        if(this.state.color === "black") {
+        if(this.state.value.color === "black") {
             return black;
         }
     }
@@ -77,7 +80,8 @@ class Board extends Component {
 
     renderSquare(i, j) {
         return <Square key={'square'+i+j} value={this.props.squares[i][j]}
-                       onClick={() => this.props.onClick(i, j)} />;
+                       gameChannel={this.props.gameChannel}
+                       dispatch={this.props.dispatch} onClick={() => this.props.onClick(i, j)} />;
     }
 
     renderRow(r) {
