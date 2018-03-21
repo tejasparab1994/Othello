@@ -100,8 +100,11 @@ defmodule Othello.GameServer do
 
   def summarize(game) do
     %{
+      player1: game.player1,
+      player2: game.player2,
+      next_turn: game.next_turn,
       squares: game.squares,
-      scores: game.scores,
+      in_progress: game.inProgress,
       winner: game.winner
     }
   end

@@ -2,7 +2,7 @@ defmodule Othello.Player do
   @enforce_keys [:name]
   # player1 or player2 thing.
 
-  defstruct [:name, :color]
+  defstruct [:name, :color, score: 0]
 
   @doc """
   Creates a player with the given `name` and `color`.

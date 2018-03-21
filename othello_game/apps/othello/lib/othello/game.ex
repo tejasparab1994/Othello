@@ -90,9 +90,10 @@ defmodule Othello.Game do
       false -> player1
     end
 
+    game = %{game | squares: newSquares, next_turn: next_turn}
 
-    %{game | squares: newSquares, next_turn: next_turn}
-    #    game
+    IO.inspect game
+    game
   end
   #  @doc """
   #  Marks the square that has the given `phrase` for the given `player`,
