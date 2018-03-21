@@ -24,16 +24,16 @@ class Game extends React.Component {
         if (this.props.gameData == null) return null;
 
         return (
-            <div className ="game" key ='game'>
-                <div className = "game-board" key='game-board'>
-                    <Board dispatch={this.props.dispatch}
-                           squares={this.props.gameData.squares}
-                           gameChannel = {this.props.gameChannel}
-                           onClick={(i) => this.handleClick(i)} />
-                </div>
-                <div className= 'game-info'>
-                    <div>{status}</div>
-                </div>
+            <div className ="game container-fluid" key ='game'>
+              <div className = "game-board area-size offset-2" key='game-board'>
+                <Board dispatch={this.props.dispatch}
+                  squares={this.props.gameData.squares}
+                  gameChannel = {this.props.gameChannel}
+                  onClick={(i) => this.handleClick(i)} />
+              </div>
+              <div className= 'game-info'>
+                <div>{status}</div>
+              </div>
             </div>
         );
     }

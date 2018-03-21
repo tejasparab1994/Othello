@@ -31,7 +31,7 @@ class LobbyView extends React.Component {
               {/*</div>*/}
               {/*</div>*/}
               <div class="row">
-                <div class="col-xs-8 col-xs-offset-5 text-center">
+                <div class="col-xs-8 col-xs-offset-3 text-center">
                   <div id="current_games" >
                     <table>
                       <tbody>
@@ -45,7 +45,7 @@ class LobbyView extends React.Component {
                         </tr>
                         {this.renderCurrentGames()}
                       </tbody>
-                      </table>
+                    </table>
                   </div>
                 </div>
               </div>

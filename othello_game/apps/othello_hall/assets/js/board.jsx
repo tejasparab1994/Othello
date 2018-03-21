@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './app.css'
+
 class Board extends Component {
   renderSquare(i) {
     return <Square key={'square'+i} value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;

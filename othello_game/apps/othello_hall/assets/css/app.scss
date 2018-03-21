@@ -36,44 +36,45 @@ h2 { text-align: center;}
 
 
 
+
+
 body{
   background-color: #ffffff;
 }
 
 .area-size {
-  width: 864px;
-  height: 710px;
+  padding-top: 10px;
+  width: 400px;
+  height: 550px;
 
 }
 
-.Square {
-  background: #0493FC;
-  border: 4px solid #000000;
-  float: left;
-  font-size: 30px;
-  font-weight: bold;
-  line-height: 34px;
-  width: 150px;
-  height: 150px;
-  margin: 16px;
-  text-align: center;
-  transition: box-shadow .3s;
-}
+// .Square {
+//   background: #0493FC;
+//   border: 4px solid #000000;
+//   float: left;
+//   font-size: 30px;
+//   font-weight: bold;
+//   line-height: 34px;
+//   width: 150px;
+//   height: 150px;
+//   margin: 16px;
+//   text-align: center;
+//   transition: box-shadow .3s;
+// }
 
 
-.Square:hover {
+.square:hover {
   box-shadow: 5px 10px #888888;
 }
 
-.Flipped {
-  background-color: #F9EE05;
-}
 
 
-.btn {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
+
+// .btn {
+//   padding-bottom: 10px;
+//   margin-bottom: 10px;
+// }
 
 
 .board-row {
@@ -81,6 +82,20 @@ body{
   content: "";
 }
 
+
+// .square {
+//   background: #008943;
+//   border: 1px solid #000000;
+//   float: left;
+//   font-size: 24px;
+//   font-weight: bold;
+//   line-height: 51px;
+//   height: 51px;
+//   margin-right: -1px;
+//   margin-top: -1px;
+//   text-align: center;
+//   width: 51px;
+// }
 
 .square {
   background: #008943;
@@ -92,9 +107,11 @@ body{
   height: 51px;
   margin-right: -1px;
   margin-top: -1px;
+  padding: 0;
   text-align: center;
   width: 51px;
 }
+
 
 .start {
   clear: both;
