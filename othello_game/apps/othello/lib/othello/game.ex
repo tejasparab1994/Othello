@@ -5,7 +5,8 @@ defmodule Othello.Game do
             winner: nil,
             inProgress: false,
             player1: nil,
-            player2: nil
+            player2: nil,
+            next_turn: nil
 
   alias Othello.{Game, Square, Player}
 
@@ -37,27 +38,62 @@ defmodule Othello.Game do
           player1: %Player{
             name: playerName,
             color: "black"
+          },
+          next_turn: %Player{
+            name: playerName,
+            color: "black"
           }
         }
       %Game{:player2 => nil} ->
-        newgame = %{
+        %{
           game |
           player2: %Player{
             name: playerName,
             color: "white"
-          }
+          },
+          inProgress: true
         }
-        newgame = %{game | inProgress: true}
-      true ->
+      _ ->
         game
     end
+
+
+    IO.inspect newgame
+
+    newgame
   end
 
   def mark_square(game, playerName, i, j) do
-    game
+    newSquares = game.squares
+                 |> Enum.with_index
+                 |> Enum.map(
+                      fn ({squareRow, x}) ->
+                        Enum.with_index(squareRow)
+                        |> Enum.map(
+                             fn ({square, y}) ->
+                               case square do
+                                 %Square{:i => ^i, :j => ^j} ->
+                                   %{square | color: game.next_turn.color}
+                                 _ -> square
+                               end
+                             end
+                           )
+                      end
+                    )
+
+    %{:next_turn => next_turn} = game
+    %{:player1 => player1} = game
+    %{:player2 => player2} = game
+
+    next_turn = case Map.equal?(next_turn, player1) do
+      true -> player2
+      false -> player1
+    end
+
+
+    %{game | squares: newSquares, next_turn: next_turn}
+    #    game
   end
-
-
   #  @doc """
   #  Marks the square that has the given `phrase` for the given `player`,
   #  updates the scores, and checks for a bingo!
