@@ -10,7 +10,6 @@ export default function reducer(state = initialState, action = {}) {
             return Object.assign({}, state, {
                 games: action.games,
                 lobby: action.lobby,
-                socket: action.socket,
                 playerName: window.playerName
             });
         default:

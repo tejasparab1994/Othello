@@ -8,17 +8,17 @@ defmodule OthelloHallWeb.GameChannel do
   require Logger
 
   def join("games:" <> game_name, _params, socket) do
-#    Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
+    #    Logger.debug("Joining Game Channel #{{game_name}}", game_name: game_name)
 
     current_player = current_player(socket)
     IO.inspect(current_player)
 
-#    users =
-#      ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
+    #    users =
+    #      ChannelMonitor.user_joined("games:" <> game_name, current_player)["games:" <> game_name]
 
     case GameServer.game_pid(game_name) do
       pid when is_pid(pid) ->
-#        send(self(), {:after_join, game_name, current_player})
+        #        send(self(), {:after_join, game_name, current_player})
         {:ok, assign(socket, :game_name, game_name)}
 
       nil ->
@@ -34,10 +34,14 @@ defmodule OthelloHallWeb.GameChannel do
     broadcast!(socket, "user:joined", %{users: current_player})
 
     {:ok, _} =
-      Presence.track(socket, current_player(socket).name, %{
-        online_at: inspect(System.system_time(:seconds)),
-        color: current_player(socket).color
-      })
+      Presence.track(
+        socket,
+        current_player(socket).name,
+        %{
+          online_at: inspect(System.system_time(:seconds)),
+          color: current_player(socket).color
+        }
+      )
 
     {:noreply, socket}
   end
@@ -49,46 +53,57 @@ defmodule OthelloHallWeb.GameChannel do
   def handle_in("games:register_for_game", _payload, socket) do
     game_name = socket.assigns.game_name
     current_player = socket.assigns.current_player
+
     summary = GameServer.assign_player(game_name, current_player)
+    game_names = GameSupervisor.game_names()
+
+    OthelloHallWeb.Endpoint.broadcast!("lobby:join", "update_games", %{current_games: game_names})
+
     OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
+
     {:reply, {:ok, %{gameData: summary}}, socket}
   end
 
   def handle_in("games:mark_square", %{"i" => i, "j" => j}, socket) do
-    IO.puts "Payload is"
+
     game_name = socket.assigns.game_name
     current_player = socket.assigns.current_player
-    summary = GameServer.mark_square(game_name, current_player,i, j)
+    summary = GameServer.mark_square(game_name, current_player, i, j)
+
     OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
     {:reply, {:ok, %{gameData: summary}}, socket}
   end
 
 
- def terminate(reason, socket) do
+  def terminate(reason, socket) do
     Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
 
     current_player = current_player(socket)
     game_name = socket.assigns.game_name
 
-#    case Game.player_left(game_name, current_player) do
-#      {:ok, game} ->
-        GameSupervisor.stop_game(game_name)
+    #    case Game.player_left(game_name, current_player) do
+    #      {:ok, game} ->
+    GameSupervisor.stop_game(game_name)
 
-#        broadcast(socket, "game:over", %{game: game})
-#        broadcast(socket, "game:player_left", %{current_player: current_player})
+    #        broadcast(socket, "game:over", %{game: game})
+    #        broadcast(socket, "game:player_left", %{current_player: current_player})
 
-#        :ok
-       LobbyChannel.broadcast_current_games()
-#      _ ->
-        :ok
-#    end
+    #        :ok
+    LobbyChannel.broadcast_current_games()
+    #      _ ->
+    :ok
+    #    end
   end
 
   def handle_in("new_chat_message", %{"body" => body}, socket) do
-    broadcast!(socket, "new_chat_message", %{
-      name: current_player(socket).name,
-      body: body
-    })
+    broadcast!(
+      socket,
+      "new_chat_message",
+      %{
+        name: current_player(socket).name,
+        body: body
+      }
+    )
 
     {:noreply, socket}
   end
