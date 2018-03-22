@@ -65,6 +65,51 @@ class Game extends React.Component {
 }
 
 
+class Board extends React.Component{
+
+    renderRow(r) {
+        var row = [];
+        for (var i = 0; i < 8; i++) {
+            row.push(this.renderSquare(r, i));
+        }
+        return (
+            <div key={'row' + r}>
+                {row}
+            </div>
+        );
+    }
+
+    renderRows() {
+        var rows = [];
+        for (var i = 0; i < 8; i++) {
+            rows.push(this.renderRow(i));
+        }
+        return (
+            <div>
+                {rows}
+            </div>
+        );
+    }
+
+    render() {
+        console.log("My turn board is rendered");
+        return (
+            <div>
+                <div id="info_board">
+                    {this.get_info()}
+                </div>
+                {this.renderRows()}
+                <div id="score_board">
+                    {score_board(this.props.gameData.player1,
+                        this.props.gameData.player2,
+                        this.props.gameData.in_progress)}
+                </div>
+            </div>
+        );
+    }
+
+}
+
 const white = "◯";
 const black = "●";
 
@@ -103,7 +148,7 @@ class Square extends React.Component {
     }
 }
 
-class OppositeTurnBoard extends Component {
+class OppositeTurnBoard extends Board {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
@@ -163,7 +208,7 @@ class OppositeTurnBoard extends Component {
     }
 }
 
-class SpectatorBoard extends Component {
+class SpectatorBoard extends Board {
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
                        value={this.props.gameData.squares[i][j]}
@@ -224,7 +269,12 @@ class SpectatorBoard extends Component {
 }
 
 
-class MyTurnBoard extends Component {
+class MyTurnBoard extends Board {
+
+    constructor(props)  {
+        super(props);
+    }
+
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
                        value={this.props.gameData.squares[i][j]}
@@ -233,49 +283,7 @@ class MyTurnBoard extends Component {
                        clickable={this.props.gameData.in_progress && true}/>;
     }
 
-    renderRow(r) {
-        var row = [];
-        for (var i = 0; i < 8; i++) {
-            row.push(this.renderSquare(r, i));
-        }
-        return (
-            <div key={'row' + r}>
-                {row}
-            </div>
-        );
-    }
-
-    renderRows() {
-        var rows = [];
-        for (var i = 0; i < 8; i++) {
-            rows.push(this.renderRow(i));
-        }
-        return (
-            <div>
-                {rows}
-            </div>
-        );
-    }
-
-    render() {
-        console.log("My turn board is rendered");
-        return (
-            <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                <div id="score_board">
-                    {score_board(this.props.gameData.player1,
-                        this.props.gameData.player2,
-                        this.props.gameData.in_progress)}
-                </div>
-            </div>
-        );
-    }
-
     get_info() {
-
 
         if (this.props.gameData.winner != null) {
             return declare_winner(this.props.gameData.winner);
@@ -286,8 +294,6 @@ class MyTurnBoard extends Component {
         else
             return (<div>This is your turn</div>);
     }
-
-
 }
 
 function declare_winner(winner)  {
