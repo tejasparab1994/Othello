@@ -43,16 +43,24 @@ class Game extends React.Component {
         if (next_turn.name === window.playerName) {
             return (
                 <MyTurnBoard dispatch={this.props.dispatch}
-                             squares={this.props.gameData.squares}
+                             gameData={this.props.gameData}
                              gameChannel={this.props.gameChannel}/>
             );
         }
-        else
+        else if (player1.name === window.playerName || player2.name === window.playerName)  {
             return (
                 <OppositeTurnBoard dispatch={this.props.dispatch}
-                                   squares={this.props.gameData.squares}
-                                   gameChannel={this.props.gameChannel}/>
+                                   gameChannel={this.props.gameChannel}
+                                   gameData={this.props.gameData} />
             );
+        }
+        else    {
+            return (
+                <SpectatorBoard dispatch={this.props.dispatch}
+                                   gameChannel={this.props.gameChannel}
+                                   gameData={this.props.gameData} />
+            );
+        }
     }
 }
 
@@ -62,14 +70,11 @@ const black = "●";
 
 class Square extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = props;
-    }
-
     Click() {
-        if (this.state.value.disabled && this.state.clickable) {
-            this.state.dispatch(markSquare(this.state.value.i, this.state.value.j, this.state.gameChannel))
+        console.log(!this.props.value.disabled);
+        console.log(this.props.clickable);
+        if (!this.props.value.disabled && this.props.clickable) {
+            this.props.dispatch(markSquare(this.props.value.i, this.props.value.j, this.props.gameChannel))
         }
         else {
             window.alert("You are not allowed to click");
@@ -77,13 +82,13 @@ class Square extends React.Component {
     }
 
     renderDisc() {
-        if (this.state.value.color == null) {
+        if (this.props.value.color == null) {
             return "";
         }
-        if (this.state.value.color === "white") {
+        if (this.props.value.color === "white") {
             return white;
         }
-        if (this.state.value.color === "black") {
+        if (this.props.value.color === "black") {
             return black;
         }
     }
@@ -102,7 +107,7 @@ class OppositeTurnBoard extends Component {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.squares[i][j]}
+                       value={this.props.gameData.squares[i][j]}
                        gameChannel={this.props.gameChannel}
                        clickable={false}
                        dispatch={this.props.dispatch}/>;
@@ -142,13 +147,57 @@ class OppositeTurnBoard extends Component {
     }
 }
 
+class SpectatorBoard extends Component{
+    renderSquare(i, j) {
+        return <Square key={'square' + i + j}
+                       value={this.props.gameData.squares[i][j]}
+                       gameChannel={this.props.gameChannel}
+                       dispatch={this.props.dispatch}
+                       clickable={false}/>;
+    }
+
+    renderRow(r) {
+        var row = [];
+        for (var i = 0; i < 8; i++) {
+            row.push(this.renderSquare(r, i));
+        }
+        return (
+            <div key={'row' + r}>
+                {row}
+            </div>
+        );
+    }
+
+    renderRows() {
+        var rows = [];
+        for (var i = 0; i < 8; i++) {
+            rows.push(this.renderRow(i));
+        }
+        return (
+            <div>
+                {rows}
+            </div>
+        );
+    }
+
+    render() {
+        console.log("Spectator board is rendered");
+        return (
+            <div>
+                {this.renderRows()}
+            </div>
+        );
+    }
+}
+
 
 class MyTurnBoard extends Component {
     renderSquare(i, j) {
-        return <Square key={'square' + i + j} value={this.props.squares[i][j]}
+        return <Square key={'square' + i + j}
+                       value={this.props.gameData.squares[i][j]}
                        gameChannel={this.props.gameChannel}
                        dispatch={this.props.dispatch}
-                       clickable={true}/>;
+                       clickable={this.props.gameData.in_progress && true}/>;
     }
 
     renderRow(r) {

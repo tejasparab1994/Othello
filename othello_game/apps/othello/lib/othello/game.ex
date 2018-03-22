@@ -32,19 +32,19 @@ defmodule Othello.Game do
              Enum.with_index(squareRow)
              |> Enum.map(
                   fn {square, j} ->
-                    case %{i: i, j: j} do
-                      %{:i => 3, :j => 3} -> %{square | i: i, color: "white"}
-                      %{:i => 3, :j => 4} -> %{square | i: i, color: "black"}
-                      %{:i => 4, :j => 3} -> %{square | i: i, color: "black"}
-                      %{:i => 4, :j => 4} -> %{square | i: i, color: "white"}
-                      _ -> %{square | i: i}
+                    match = %{i: i, j: j}
+                    case match do
+                      %{:i => 3, :j => 3} -> %{square | i: i, color: "white", disabled: true}
+                      %{:i => 3, :j => 4} -> %{square | i: i, color: "black", disabled: true}
+                      %{:i => 4, :j => 3} -> %{square | i: i, color: "black", disabled: true}
+                      %{:i => 4, :j => 4} -> %{square | i: i, color: "white", disabled: true}
+                      _ -> IO.puts "Doesn't match"
+                           %{square | i: i}
                     end
                   end
                 )
            end
          )
-      |> Enum.at(3)
-      |> Enum.at(3)
 
     game = %Game{squares: squares}
     IO.inspect(game)
