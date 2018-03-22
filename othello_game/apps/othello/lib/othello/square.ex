@@ -1,6 +1,5 @@
 defmodule Othello.Square do
-
-  defstruct color: nil,i: 0,j: 0, clickable: true
+  defstruct color: nil, i: 0, j: 0, disabled: false
 
   alias __MODULE__
 

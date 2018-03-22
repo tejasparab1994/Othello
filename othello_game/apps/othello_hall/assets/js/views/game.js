@@ -68,7 +68,7 @@ class Square extends React.Component {
     }
 
     Click() {
-        if (this.state.value.clickable && this.state.clickable) {
+        if (this.state.value.disabled && this.state.clickable) {
             this.state.dispatch(markSquare(this.state.value.i, this.state.value.j, this.state.gameChannel))
         }
         else {
