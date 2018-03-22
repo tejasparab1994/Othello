@@ -27,10 +27,22 @@ defmodule Othello.Game do
       squares
       |> List.duplicate(8)
       |> Enum.with_index()
-      |> Enum.map(fn {squareRow, i} ->
-        Enum.with_index(squareRow)
-        |> Enum.map(fn {square, j} -> %{square | i: i} end)
-      end)
+      |> Enum.map(
+           fn {squareRow, i} ->
+             Enum.with_index(squareRow)
+             |> Enum.map(
+                  fn {square, j} ->
+                    case %{i: i, j: j} do
+                      %{:i => 3, :j => 3} -> %{square | i: i, color: "white"}
+                      %{:i => 3, :j => 4} -> %{square | i: i, color: "black"}
+                      %{:i => 4, :j => 3} -> %{square | i: i, color: "black"}
+                      %{:i => 4, :j => 4} -> %{square | i: i, color: "white"}
+                      _ -> %{square | i: i}
+                    end
+                  end
+                )
+           end
+         )
       |> Enum.at(3)
       |> Enum.at(3)
 
@@ -45,24 +57,26 @@ defmodule Othello.Game do
         %Game{:player1 => nil} ->
           %{
             game
-            | player1: %Player{
-                name: playerName,
-                color: "black"
-              },
-              next_turn: %Player{
-                name: playerName,
-                color: "black"
-              }
+          |
+            player1: %Player{
+              name: playerName,
+              color: "black"
+            },
+            next_turn: %Player{
+              name: playerName,
+              color: "black"
+            }
           }
 
         %Game{:player2 => nil} ->
           %{
             game
-            | player2: %Player{
-                name: playerName,
-                color: "white"
-              },
-              inProgress: true
+          |
+            player2: %Player{
+              name: playerName,
+              color: "white"
+            },
+            inProgress: true
           }
 
         _ ->
@@ -78,18 +92,22 @@ defmodule Othello.Game do
     newSquares =
       game.squares
       |> Enum.with_index()
-      |> Enum.map(fn {squareRow, x} ->
-        Enum.with_index(squareRow)
-        |> Enum.map(fn {square, y} ->
-          case square do
-            %Square{:i => ^i, :j => ^j} ->
-              %{square | color: game.next_turn.color}
+      |> Enum.map(
+           fn {squareRow, x} ->
+             Enum.with_index(squareRow)
+             |> Enum.map(
+                  fn {square, y} ->
+                    case square do
+                      %Square{:i => ^i, :j => ^j} ->
+                        %{square | color: game.next_turn.color}
 
-            _ ->
-              square
-          end
-        end)
-      end)
+                      _ ->
+                        square
+                    end
+                  end
+                )
+           end
+         )
 
     %{:next_turn => next_turn} = game
     %{:player1 => player1} = game

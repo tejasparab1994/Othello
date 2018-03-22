@@ -14,7 +14,7 @@ export class ListGame extends React.Component {
                 {this.state.name}
               </td>
               <td>
-                <a href={getLink(this.state.name)} class="btn btn-info" role="button">
+                <a href={getLink(this.state.name)} className="btn btn-info" role="button">
                   {!this.state.inProgress ? "Join" : "Spectate"}
                 </a>
               </td>

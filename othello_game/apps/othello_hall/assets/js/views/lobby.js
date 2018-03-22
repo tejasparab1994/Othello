@@ -24,32 +24,24 @@ class LobbyView extends React.Component {
         const {lobby, dispatch} = this.props;
         return (
             <div id="lobby_view">
-              {/*<div class="row">*/}
-              {/*<div class="col-xs-8 col-xs-offset-2 text-center">*/}
-              {/*<h4>New Game?</h4>*/}
-              {/*<NewGame lobby={lobby} dispatch={dispatch}/>*/}
-              {/*</div>*/}
-              {/*</div>*/}
-              <div class="row">
-                <div class="col-xs-8 col-xs-offset-3 text-center">
-                  <div id="current_games" >
-                    <table>
-                      <tbody>
-                        <tr>
-                          <th>
-                            Game Name
-                          </th>
-                          <th>
-
-                          </th>
-                        </tr>
-                        {this.renderCurrentGames()}
-                      </tbody>
-                    </table>
-                  </div>
+                <div className="row">
+                    <div className="col-xs-8 col-xs-offset-3 text-center">
+                        <div id="current_games">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>
+                                        Game Name
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                                {this.renderCurrentGames()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
             </div>
         );
     }
@@ -61,10 +53,11 @@ class LobbyView extends React.Component {
 
 
         const gamesList = games.map(game => {
-            {console.log(game.name);}
+            {
+                console.log(game.name);
+            }
             return (
-
-                <ListGame key= {game.name} game={game}/>
+                <ListGame key={game.name + game.inProgress} game={game}/>
             );
         });
 
