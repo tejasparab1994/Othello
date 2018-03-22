@@ -70,12 +70,25 @@ defmodule OthelloHallWeb.GameChannel do
 
 
   def terminate(reason, socket) do
-    Logger.debug("Terminating GameChannel #{socket.assigns.game_name} #{inspect(reason)}")
-
-    current_player = current_player(socket)
     game_name = socket.assigns.game_name
+    game_summary = GameServer.summary(game_name)
+    player_name = socket.assigns.current_player
+    player_name_1 = game_summary.player1.name
+    player_name_2 = game_summary.player2.name
 
-    GameSupervisor.stop_game(game_name)
+    case player_name do
+      ^player_name_1 ->
+        IO.puts "Player 1 has left the game"
+        summary = GameServer.declare_winner(game_name, :player2)
+        GameSupervisor.stop_game(game_name)
+        OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
+      ^player_name_2 ->
+        IO.puts "Player 2 has left the game"
+        summary = GameServer.declare_winner(game_name, :player1)
+        GameSupervisor.stop_game(game_name)
+        OthelloHallWeb.Endpoint.broadcast!("games:#{game_name}", "update_game", %{gameData: summary})
+      _ ->  :ok
+    end
     LobbyChannel.broadcast_current_games()
     :ok
   end

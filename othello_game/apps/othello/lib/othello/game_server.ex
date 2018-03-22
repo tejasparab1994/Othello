@@ -33,6 +33,14 @@ defmodule Othello.GameServer do
     GenServer.call(via_tuple(game_name), :summary)
   end
 
+  def declare_winner(game_name, :player2) do
+    GenServer.call(via_tuple(game_name), {:mark_winner, :player2})
+  end
+
+  def declare_winner(game_name, :player1) do
+    GenServer.call(via_tuple(game_name), {:mark_winner, :player1})
+  end
+
   def assign_player(game_name, playerName) do
     GenServer.call(via_tuple(game_name), {:assign_player, playerName})
   end
@@ -88,6 +96,18 @@ defmodule Othello.GameServer do
 
  def handle_call({:assign_player, playerName}, _from, game) do
     new_game = Othello.Game.assign_player(game, playerName)
+    :ets.insert(:games_table, {my_game_name(), new_game})
+    {:reply, summarize(new_game), new_game, @timeout}
+  end
+
+  def handle_call({:mark_winner, :player1}, _from, game) do
+    new_game = Othello.Game.mark_winner(game, :player1)
+    :ets.insert(:games_table, {my_game_name(), new_game})
+    {:reply, summarize(new_game), new_game, @timeout}
+  end
+
+  def handle_call({:mark_winner, :player2}, _from, game) do
+    new_game = Othello.Game.mark_winner(game, :player2)
     :ets.insert(:games_table, {my_game_name(), new_game})
     {:reply, summarize(new_game), new_game, @timeout}
   end

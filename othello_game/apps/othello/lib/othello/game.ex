@@ -51,6 +51,14 @@ defmodule Othello.Game do
     game
   end
 
+  def mark_winner(game, :player1) do
+    %{game | winner: game.player1 , inProgress: false}
+  end
+
+  def mark_winner(game, :player2) do
+    %{game | winner: game.player2, inProgress: false}
+  end
+
   def assign_player(game, playerName) do
     newgame =
       case game do

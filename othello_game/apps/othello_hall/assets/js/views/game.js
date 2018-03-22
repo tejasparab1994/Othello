@@ -153,6 +153,10 @@ class OppositeTurnBoard extends Component {
     }
 
     get_info() {
+        if (this.props.gameData.winner != null) {
+            return declare_winner(this.props.gameData.winner);
+        }
+
         return "This is "
             + this.props.gameData.next_turn.name
             + "'s" + " turn";
@@ -208,6 +212,11 @@ class SpectatorBoard extends Component {
     }
 
     get_info() {
+
+        if (this.props.gameData.winner != null) {
+            return declare_winner(this.props.gameData.winner);
+        }
+
         return "This is "
             + this.props.gameData.next_turn.name
             + "'s" + " turn";
@@ -266,13 +275,27 @@ class MyTurnBoard extends Component {
     }
 
     get_info() {
+
+
+        if (this.props.gameData.winner != null) {
+            return declare_winner(this.props.gameData.winner);
+        }
+
         if (!this.props.gameData.in_progress)
-            return "Waiting for Player 2 to Join";
+            return (<div>Waiting for Player 2 to Join</div>);
         else
-            return "This is your turn";
+            return (<div>This is your turn</div>);
     }
 
 
+}
+
+function declare_winner(winner)  {
+
+    if (winner.name === window.playerName)
+        return (<div>Congratulations. You are the winner</div>);
+    else
+        return (<div>{winner.name +  " is the winner."}</div>)
 }
 
 const mapStateToProps = (state, props) => {
