@@ -12,17 +12,16 @@ defmodule OthelloHallWeb.GameController do
 
   def create(conn, _) do
     game_name = OthelloHall.HaikuName.generate()
-    IO.inspect("this is current player")
+    # IO.inspect("this is current player")
     current_player = get_session(conn, :current_player)
-    IO.inspect(current_player.color)
+    # IO.inspect(current_player.color)
     current_player = %{current_player | color: "black"}
-    IO.inspect(current_player)
+    # IO.inspect(current_player)
 
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->
         LobbyChannel.broadcast_current_games()
-        current_player =
-        redirect(conn, to: game_path(conn, :show, game_name))
+        current_player = redirect(conn, to: game_path(conn, :show, game_name))
 
       {:error, _error} ->
         conn

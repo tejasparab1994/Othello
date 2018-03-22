@@ -13,88 +13,100 @@ defmodule Othello.Game do
   def new do
     squareBlack = Square.new("black")
     squareWhite = Square.new("white")
-    squares = Square.new()
-              |> List.duplicate(8)
-              |> Enum.with_index
-              |> Enum.map(fn ({square, j}) -> %{square | j: j}  end)
+    IO.puts("inside new")
+    IO.inspect(squareBlack)
+    IO.inspect(squareWhite)
 
-    squares = squares
-              |> List.duplicate(8)
-              |> Enum.with_index
-              |> Enum.map(
-                   fn ({squareRow, i}) -> Enum.with_index(squareRow)
-                                          |> Enum.map(fn ({square, j}) -> %{square | i: i} end)
-                   end
-                 )
+    squares =
+      Square.new()
+      |> List.duplicate(8)
+      |> Enum.with_index()
+      |> Enum.map(fn {square, j} -> %{square | j: j} end)
 
-    %Game{squares: squares}
+    squares =
+      squares
+      |> List.duplicate(8)
+      |> Enum.with_index()
+      |> Enum.map(fn {squareRow, i} ->
+        Enum.with_index(squareRow)
+        |> Enum.map(fn {square, j} -> %{square | i: i} end)
+      end)
+      |> Enum.at(3)
+      |> Enum.at(3)
+
+    game = %Game{squares: squares}
+    IO.inspect(game)
+    game
   end
 
   def assign_player(game, playerName) do
-    newgame = case game do
-      %Game{:player1 => nil} ->
-        %{
-          game |
-          player1: %Player{
-            name: playerName,
-            color: "black"
-          },
-          next_turn: %Player{
-            name: playerName,
-            color: "black"
+    newgame =
+      case game do
+        %Game{:player1 => nil} ->
+          %{
+            game
+            | player1: %Player{
+                name: playerName,
+                color: "black"
+              },
+              next_turn: %Player{
+                name: playerName,
+                color: "black"
+              }
           }
-        }
-      %Game{:player2 => nil} ->
-        %{
-          game |
-          player2: %Player{
-            name: playerName,
-            color: "white"
-          },
-          inProgress: true
-        }
-      _ ->
-        game
-    end
 
+        %Game{:player2 => nil} ->
+          %{
+            game
+            | player2: %Player{
+                name: playerName,
+                color: "white"
+              },
+              inProgress: true
+          }
 
-    IO.inspect newgame
+        _ ->
+          game
+      end
+
+    # IO.inspect(newgame)
 
     newgame
   end
 
   def mark_square(game, playerName, i, j) do
-    newSquares = game.squares
-                 |> Enum.with_index
-                 |> Enum.map(
-                      fn ({squareRow, x}) ->
-                        Enum.with_index(squareRow)
-                        |> Enum.map(
-                             fn ({square, y}) ->
-                               case square do
-                                 %Square{:i => ^i, :j => ^j} ->
-                                   %{square | color: game.next_turn.color}
-                                 _ -> square
-                               end
-                             end
-                           )
-                      end
-                    )
+    newSquares =
+      game.squares
+      |> Enum.with_index()
+      |> Enum.map(fn {squareRow, x} ->
+        Enum.with_index(squareRow)
+        |> Enum.map(fn {square, y} ->
+          case square do
+            %Square{:i => ^i, :j => ^j} ->
+              %{square | color: game.next_turn.color}
+
+            _ ->
+              square
+          end
+        end)
+      end)
 
     %{:next_turn => next_turn} = game
     %{:player1 => player1} = game
     %{:player2 => player2} = game
 
-    next_turn = case Map.equal?(next_turn, player1) do
-      true -> player2
-      false -> player1
-    end
+    next_turn =
+      case Map.equal?(next_turn, player1) do
+        true -> player2
+        false -> player1
+      end
 
     game = %{game | squares: newSquares, next_turn: next_turn}
 
-    IO.inspect game
-    game
+    # IO.inspect(game)
+    # game
   end
+
   #  @doc """
   #  Marks the square that has the given `phrase` for the given `player`,
   #  updates the scores, and checks for a bingo!

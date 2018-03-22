@@ -49,9 +49,9 @@ defmodule Othello.GameSupervisor do
     DynamicSupervisor.which_children(__MODULE__)
     |> Enum.map(fn {_, game_pid, _, _} ->
       keys = Registry.keys(Othello.GameRegistry, game_pid)
-      IO.inspect(keys)
+      # IO.inspect(keys)
       game_name = keys |> List.first()
-      IO.inspect(game_name)
+      # IO.inspect(game_name)
       [{^game_name, game}] = :ets.lookup(:games_table, game_name)
       %{name: game_name, inProgress: game.inProgress}
     end)
