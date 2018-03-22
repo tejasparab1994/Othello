@@ -142,6 +142,9 @@ class OppositeTurnBoard extends Component {
         return (
             <div>
                 {this.renderRows()}
+                {score_board(this.props.gameData.player1,
+                    this.props.gameData.player2,
+                    this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -185,6 +188,9 @@ class SpectatorBoard extends Component{
         return (
             <div>
                 {this.renderRows()}
+                {score_board(this.props.gameData.player1,
+                    this.props.gameData.player2,
+                    this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -229,6 +235,11 @@ class MyTurnBoard extends Component {
         return (
             <div>
                 {this.renderRows()}
+                <div id="score_board">
+                    {score_board(this.props.gameData.player1,
+                        this.props.gameData.player2,
+                        this.props.gameData.in_progress)}
+                </div>
             </div>
         );
     }
@@ -239,5 +250,23 @@ const mapStateToProps = (state, props) => {
     return Object.assign({}, state.game, props)
 }
 
+function score_board(player1, player2, in_progress) {
+    if (in_progress) {
+        return (
+            <div id="score_board">
+                <div id="score_player_1">
+                    <span>Player Name: {player1.name}</span>
+                    <span>Player Score: {player1.score}</span>
+                </div>
+                <div id="score_player_2">
+                    <span>Player Name: {player2.name}</span>
+                    <span>Player Score: {player2.score}</span>
+                </div>
+            </div>
+        );
+    }
+
+    return null;
+}
 
 export default connect(mapStateToProps)(Game);
