@@ -47,18 +47,18 @@ class Game extends React.Component {
                              gameChannel={this.props.gameChannel}/>
             );
         }
-        else if (player1.name === window.playerName || player2.name === window.playerName)  {
+        else if (player1.name === window.playerName || player2.name === window.playerName) {
             return (
                 <OppositeTurnBoard dispatch={this.props.dispatch}
                                    gameChannel={this.props.gameChannel}
-                                   gameData={this.props.gameData} />
+                                   gameData={this.props.gameData}/>
             );
         }
-        else    {
+        else {
             return (
                 <SpectatorBoard dispatch={this.props.dispatch}
-                                   gameChannel={this.props.gameChannel}
-                                   gameData={this.props.gameData} />
+                                gameChannel={this.props.gameChannel}
+                                gameData={this.props.gameData}/>
             );
         }
     }
@@ -141,6 +141,9 @@ class OppositeTurnBoard extends Component {
         console.log("Opposite board is rendered");
         return (
             <div>
+                <div id="info_board">
+                    {this.get_info()}
+                </div>
                 {this.renderRows()}
                 {score_board(this.props.gameData.player1,
                     this.props.gameData.player2,
@@ -148,9 +151,15 @@ class OppositeTurnBoard extends Component {
             </div>
         );
     }
+
+    get_info() {
+        return "This is "
+            + this.props.gameData.next_turn.name
+            + "'s" + " turn";
+    }
 }
 
-class SpectatorBoard extends Component{
+class SpectatorBoard extends Component {
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
                        value={this.props.gameData.squares[i][j]}
@@ -187,12 +196,21 @@ class SpectatorBoard extends Component{
         console.log("Spectator board is rendered");
         return (
             <div>
+                <div id="info_board">
+                    {this.get_info()}
+                </div>
                 {this.renderRows()}
                 {score_board(this.props.gameData.player1,
                     this.props.gameData.player2,
                     this.props.gameData.in_progress)}
             </div>
         );
+    }
+
+    get_info() {
+        return "This is "
+            + this.props.gameData.next_turn.name
+            + "'s" + " turn";
     }
 }
 
@@ -234,6 +252,9 @@ class MyTurnBoard extends Component {
         console.log("My turn board is rendered");
         return (
             <div>
+                <div id="info_board">
+                    {this.get_info()}
+                </div>
                 {this.renderRows()}
                 <div id="score_board">
                     {score_board(this.props.gameData.player1,
@@ -243,6 +264,15 @@ class MyTurnBoard extends Component {
             </div>
         );
     }
+
+    get_info() {
+        if (!this.props.gameData.in_progress)
+            return "Waiting for Player 2 to Join";
+        else
+            return "This is your turn";
+    }
+
+
 }
 
 const mapStateToProps = (state, props) => {
