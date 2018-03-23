@@ -1,4 +1,13 @@
 defmodule Othello.Game do
+  @directions for(
+                x <- -1..1,
+                y <- -1..1,
+                do: [x, y]
+              )
+              |> List.delete([0, 0])
+
+  def directions, do: @directions
+
   @enforce_keys [:squares]
   defstruct squares: nil,
             scores: %{},
@@ -27,24 +36,54 @@ defmodule Othello.Game do
       squares
       |> List.duplicate(8)
       |> Enum.with_index()
-      |> Enum.map(
-           fn {squareRow, i} ->
-             Enum.with_index(squareRow)
-             |> Enum.map(
-                  fn {square, j} ->
-                    match = %{i: i, j: j}
-                    case match do
-                      %{:i => 3, :j => 3} -> %{square | i: i, color: "white", disabled: true}
-                      %{:i => 3, :j => 4} -> %{square | i: i, color: "black", disabled: true}
-                      %{:i => 4, :j => 3} -> %{square | i: i, color: "black", disabled: true}
-                      %{:i => 4, :j => 4} -> %{square | i: i, color: "white", disabled: true}
-                      _ -> IO.puts "Doesn't match"
-                           %{square | i: i}
-                    end
-                  end
-                )
-           end
-         )
+      |> Enum.map(fn {squareRow, i} ->
+        Enum.with_index(squareRow)
+        |> Enum.map(fn {square, j} ->
+          match = %{i: i, j: j}
+
+          case match do
+            %{:i => 3, :j => 3} ->
+              %{square | i: i, color: "white"}
+
+            %{:i => 3, :j => 4} ->
+              %{square | i: i, color: "black"}
+
+            %{:i => 4, :j => 3} ->
+              %{square | i: i, color: "black"}
+
+            %{:i => 4, :j => 4} ->
+              %{square | i: i, color: "white"}
+
+            %{:i => 2, :j => 3} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 2, :j => 4} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 3, :j => 2} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 4, :j => 2} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 3, :j => 5} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 5, :j => 4} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 4, :j => 5} ->
+              %{square | i: i, disabled: false}
+
+            %{:i => 5, :j => 3} ->
+              %{square | i: i, disabled: false}
+
+            _ ->
+              IO.puts("Doesn't match")
+              %{square | i: i}
+          end
+        end)
+      end)
 
     game = %Game{squares: squares}
     IO.inspect(game)
@@ -52,7 +91,7 @@ defmodule Othello.Game do
   end
 
   def mark_winner(game, :player1) do
-    %{game | winner: game.player1 , inProgress: false}
+    %{game | winner: game.player1, inProgress: false}
   end
 
   def mark_winner(game, :player2) do
@@ -65,26 +104,24 @@ defmodule Othello.Game do
         %Game{:player1 => nil} ->
           %{
             game
-          |
-            player1: %Player{
-              name: playerName,
-              color: "black"
-            },
-            next_turn: %Player{
-              name: playerName,
-              color: "black"
-            }
+            | player1: %Player{
+                name: playerName,
+                color: "black"
+              },
+              next_turn: %Player{
+                name: playerName,
+                color: "black"
+              }
           }
 
         %Game{:player2 => nil} ->
           %{
             game
-          |
-            player2: %Player{
-              name: playerName,
-              color: "white"
-            },
-            inProgress: true
+            | player2: %Player{
+                name: playerName,
+                color: "white"
+              },
+              inProgress: true
           }
 
         _ ->
@@ -100,22 +137,18 @@ defmodule Othello.Game do
     newSquares =
       game.squares
       |> Enum.with_index()
-      |> Enum.map(
-           fn {squareRow, x} ->
-             Enum.with_index(squareRow)
-             |> Enum.map(
-                  fn {square, y} ->
-                    case square do
-                      %Square{:i => ^i, :j => ^j} ->
-                        %{square | color: game.next_turn.color}
+      |> Enum.map(fn {squareRow, x} ->
+        Enum.with_index(squareRow)
+        |> Enum.map(fn {square, y} ->
+          case square do
+            %Square{:i => ^i, :j => ^j} ->
+              %{square | color: game.next_turn.color}
 
-                      _ ->
-                        square
-                    end
-                  end
-                )
-           end
-         )
+            _ ->
+              square
+          end
+        end)
+      end)
 
     %{:next_turn => next_turn} = game
     %{:player1 => player1} = game

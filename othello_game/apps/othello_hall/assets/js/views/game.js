@@ -25,8 +25,8 @@ class Game extends React.Component {
 
         return (
             <div className="game container-fluid" key='game'>
-                <div className="game-board area-size offset-2" key='game-board'>
-                    {this.getBoard()}
+              <div className="game-board area-size offset-2" key='game-board'>
+                {this.getBoard()}
                 </div>
                 <div className='game-info'>
                     <div>{status}</div>
@@ -43,22 +43,22 @@ class Game extends React.Component {
         if (next_turn.name === window.playerName) {
             return (
                 <MyTurnBoard dispatch={this.props.dispatch}
-                             gameData={this.props.gameData}
-                             gameChannel={this.props.gameChannel}/>
+                  gameData={this.props.gameData}
+                  gameChannel={this.props.gameChannel}/>
             );
         }
         else if (player1.name === window.playerName || player2.name === window.playerName) {
             return (
                 <OppositeTurnBoard dispatch={this.props.dispatch}
-                                   gameChannel={this.props.gameChannel}
-                                   gameData={this.props.gameData}/>
+                  gameChannel={this.props.gameChannel}
+                  gameData={this.props.gameData}/>
             );
         }
         else {
             return (
                 <SpectatorBoard dispatch={this.props.dispatch}
-                                gameChannel={this.props.gameChannel}
-                                gameData={this.props.gameData}/>
+                  gameChannel={this.props.gameChannel}
+                  gameData={this.props.gameData}/>
             );
         }
     }
@@ -95,15 +95,15 @@ class Board extends React.Component{
         console.log("My turn board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                <div id="score_board">
-                    {score_board(this.props.gameData.player1,
-                        this.props.gameData.player2,
-                        this.props.gameData.in_progress)}
-                </div>
+              <div id="info_board">
+                {this.get_info()}
+              </div>
+              {this.renderRows()}
+              <div id="score_board">
+                {score_board(this.props.gameData.player1,
+                  this.props.gameData.player2,
+                this.props.gameData.in_progress)}
+              </div>
             </div>
         );
     }
@@ -152,9 +152,9 @@ class OppositeTurnBoard extends Board {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       clickable={false}
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          clickable={false}
                        dispatch={this.props.dispatch}/>;
     }
 
@@ -211,10 +211,10 @@ class OppositeTurnBoard extends Board {
 class SpectatorBoard extends Board {
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       dispatch={this.props.dispatch}
-                       clickable={false}/>;
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          dispatch={this.props.dispatch}
+          clickable={false}/>;
     }
 
     renderRow(r) {
@@ -277,10 +277,10 @@ class MyTurnBoard extends Board {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       dispatch={this.props.dispatch}
-                       clickable={this.props.gameData.in_progress && true}/>;
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          dispatch={this.props.dispatch}
+          clickable={this.props.gameData.in_progress && true}/>;
     }
 
     get_info() {
