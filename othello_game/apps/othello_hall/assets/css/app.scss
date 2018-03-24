@@ -44,6 +44,7 @@ body{
   width: 400px;
   height: 550px;
 
+
 }
 
 
@@ -65,6 +66,16 @@ table th {
 }
 
 
+.game {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+}
+
+.game-name{
+  margin-left: 22%;
+}
+
+
 
 // .btn {
 //   padding-bottom: 10px;
@@ -76,6 +87,8 @@ table th {
   clear: both;
   content: "";
 }
+
+
 
 
 .square {
@@ -100,7 +113,6 @@ table th {
 }
 
 
-
 .start {
   clear: both;
 }
@@ -111,4 +123,14 @@ table th {
 }
 .scores2{
   margin-bottom: 10px;
+}
+
+
+.switch {
+  margin-right: 10px;
+}
+
+.shadow-board {
+  -webkit-box-shadow: 0 0 10px #696969;
+        box-shadow: 0 0 10px #696969;
 }

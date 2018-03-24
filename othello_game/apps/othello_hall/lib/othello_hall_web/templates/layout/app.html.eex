@@ -19,22 +19,23 @@
   </head>
 
   <body>
+    <div>
+      <nav>
+        <ul class="nav justify-content-end switch">
+          <li>
+            <%= link "Switch Player",
+                     to: page_path(@conn, :delete),
+                     method: :delete, class: "btn btn-danger btn-xs" %>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <div class="container">
       <header>
-        <div>
-          <nav>
-            <ul class="nav nav-pills pull-right">
-              <li>
-                <%= link "Switch Player",
-                         to: page_path(@conn, :delete),
-                         method: :delete, class: "btn btn-danger btn-xs" %>
-              </li>
-            </ul>
-          </nav>
-        </div>
+
 
         <div class="row">
-          <div class="col-xs-12 text-center offset-2">
+          <div class="col-xs-12 text-center offset-1">
             <div class="letters">
               <span class="letter inverse">O</span>
               <span class="letter">T</span>

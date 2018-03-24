@@ -9,7 +9,7 @@
                           autofocus: true,
                           required: true %>
       </div>
-      <%= submit "Enter Lobby", class: "btn btn-primary" %>
+      <%= submit "Enter Lobby", class: "btn btn-primary btn-lg" %>
     <% end %>
   </div>
 </div>

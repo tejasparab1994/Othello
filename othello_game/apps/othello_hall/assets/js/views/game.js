@@ -26,11 +26,15 @@ class Game extends React.Component {
 
         return (
             <div className="game container-fluid" key='game'>
-              <div className="game-board area-size offset-2" key='game-board'>
-                {this.getBoard()}
-              </div>
-              <div className='game-info'>
-                <div>{status}</div>
+              <div className="game-board area-size" key='game-board'>
+                <div className="shadow-board">
+                  {this.getBoard()}
+                </div>
+
+
+                <div className='game-info'>
+                  <div>{status}</div>
+                </div>
               </div>
             </div>
         );
@@ -75,7 +79,7 @@ class Board extends React.Component{
         }
         return (
             <div key={'row' + r}>
-                {row}
+              {row}
             </div>
         );
     }
@@ -156,7 +160,7 @@ class OppositeTurnBoard extends Board {
           value={this.props.gameData.squares[i][j]}
           gameChannel={this.props.gameChannel}
           clickable={false}
-                       dispatch={this.props.dispatch}/>;
+          dispatch={this.props.dispatch}/>;
     }
 
     renderRow(r) {
