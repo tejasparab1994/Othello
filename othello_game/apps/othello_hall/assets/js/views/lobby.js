@@ -25,7 +25,7 @@ class LobbyView extends React.Component {
         return (
             <div id="lobby_view">
               <div className="row">
-                <div className="col-xl-5 col-xs-offset-2 text-center">
+                <div className="col-xl-6 col-xs-offset-3 text-center">
                   <div id="current_games">
                     <table>
                       <tbody>

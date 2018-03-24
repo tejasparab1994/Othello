@@ -28,10 +28,10 @@ class Game extends React.Component {
             <div className="game container-fluid" key='game'>
               <div className="game-board area-size offset-2" key='game-board'>
                 {this.getBoard()}
-                </div>
-                <div className='game-info'>
-                    <div>{status}</div>
-                </div>
+              </div>
+              <div className='game-info'>
+                <div>{status}</div>
+              </div>
             </div>
         );
     }
@@ -246,13 +246,13 @@ class SpectatorBoard extends Board {
         console.log("Spectator board is rendered");
         return (
             <div>
-              <div id="info_board">
+              <div class="card card-header visible" id="info_board">
                 {this.get_info()}
-                </div>
-                {this.renderRows()}
-                {score_board(this.props.gameData.player1,
-                    this.props.gameData.player2,
-                    this.props.gameData.in_progress)}
+              </div>
+              {this.renderRows()}
+              {score_board(this.props.gameData.player1,
+                this.props.gameData.player2,
+              this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -300,9 +300,9 @@ class MyTurnBoard extends Board {
         else
             return (
               <div className = "card card-header visible">
-                <h5>
+                <b>
                   This is your turn
-                </h5>
+                </b>
               </div>);
     }
 }
