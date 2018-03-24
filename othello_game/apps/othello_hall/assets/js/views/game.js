@@ -109,12 +109,10 @@ class Board extends React.Component{
         );
     }
 
-
-
 }
 
-const white = &#x26AA;
-const black = &#x26AB;
+const white = "⚪";
+const black = "⚫";
 
 class Square extends React.Component {
 
