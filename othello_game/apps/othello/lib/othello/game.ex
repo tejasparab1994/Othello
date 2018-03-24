@@ -52,7 +52,7 @@ defmodule Othello.Game do
   end
 
   def mark_winner(game, :player1) do
-    %{game | winner: game.player1 , inProgress: false}
+    %{game | winner: game.player1, inProgress: false}
   end
 
   def mark_winner(game, :player2) do
@@ -91,13 +91,16 @@ defmodule Othello.Game do
           game
       end
 
-    # IO.inspect(newgame)
-
     newgame
   end
 
   def mark_square(game, playerName, i, j) do
-    newSquares =
+
+    #    if {i, j} in available_moves(i, j, game.squares, game.next_turn.color) do
+    #
+    #    end
+
+    new_squares =
       game.squares
       |> Enum.with_index()
       |> Enum.map(
@@ -108,9 +111,28 @@ defmodule Othello.Game do
                     case square do
                       %Square{:i => ^i, :j => ^j} ->
                         %{square | color: game.next_turn.color}
-
                       _ ->
                         square
+                    end
+                  end
+                )
+           end
+         )
+
+    next_available_moves = available_moves(new_squares, flip_color(game.next_turn.color))
+
+    new_squares =
+      game.squares
+      |> Enum.with_index()
+      |> Enum.map(
+           fn {squareRow, x} ->
+             Enum.with_index(squareRow)
+             |> Enum.map(
+                  fn {square, y} ->
+                    if {x, y} in next_available_moves do
+                      %{square | disabled: false}
+                    else
+                      square
                     end
                   end
                 )
@@ -127,10 +149,75 @@ defmodule Othello.Game do
         false -> player1
       end
 
-    game = %{game | squares: newSquares, next_turn: next_turn}
+    game = %{game | squares: new_squares, next_turn: next_turn}
+  end
 
-    # IO.inspect(game)
-    # game
+  defp available_moves(squares, color)  do
+    Enum.reduce(
+      squares,
+      [],
+      fn (squareRow, acc1) ->
+        Enum.concat(
+          acc1,
+          squareRow
+          |> Enum.filter(fn square -> square.color == nil end)
+          |> Enum.filter(fn square -> is_valid_move(squares, square.i, square.j, color) end)
+          |> Enum.map(fn square -> {square.i, square.j} end)
+        )
+      end
+    )
+  end
+
+
+  defp is_valid_move(squares, i, j, color) do
+    traversal = for(row <- -1..1, col <- -1..1, do: [row, col])
+                |> List.delete([0, 0])
+    Enum.reduce(
+      traversal,
+      false,
+      fn ([row, col], acc) ->
+        acc || is_possible_direction(squares, [row, col], i, j, color)
+      end
+    )
+  end
+
+
+  defp is_possible_direction(squares, [row, col], i, j, color) do
+    possible_indices = for(mul <- 1..8, do: [row * mul, col * mul])
+                       |> Enum.map(fn [row, col] -> [row + i, col + j] end)
+                       |> Enum.map(fn [row, col] -> within_bounds(row, col) end)
+
+    colors = Enum.reduce(
+      squares,
+      [],
+      fn (squareRow, acc) ->
+        Enum.concat(
+          acc,
+          Enum.filter(
+            squareRow,
+            fn (square) -> [square.i, square.j] in possible_indices
+            end
+          )
+          |> Enum.map(fn square -> square.color end)
+        )
+      end
+    )
+
+    opposite_color = Enum.at(colors, 0)
+    my_color = Enum.at(colors, 1)
+
+    my_color == color && opposite_color == flip_color(color)
+  end
+
+  defp within_bounds(row, col) do
+    row >= 0 && row < 8 && col >= 0 && col < 8
+  end
+
+  defp flip_color(color) do
+    case color do
+      "black" -> "white"
+      "white" -> "black"
+    end
   end
 
   #  @doc """
