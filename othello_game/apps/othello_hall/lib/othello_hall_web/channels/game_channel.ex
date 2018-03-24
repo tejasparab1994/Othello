@@ -19,25 +19,6 @@ defmodule OthelloHallWeb.GameChannel do
     end
   end
 
-#  def handle_info({:after_join, game_name, current_player}, socket) do
-#    summary = GameServer.summary(game_name)
-#
-#    push(socket, "game_summary", summary)
-#    push(socket, "presence_state", Presence.list(socket))
-#    broadcast!(socket, "user:joined", %{users: current_player})
-#
-#    {:ok, _} =
-#      Presence.track(
-#        socket,
-#        current_player(socket).name,
-#        %{
-#          online_at: inspect(System.system_time(:seconds)),
-#          color: current_player(socket).color
-#        }
-#      )
-#
-#    {:noreply, socket}
-#  end
   def handle_in("games:register_for_game", _payload, socket) do
     game_name = socket.assigns.game_name
     current_player = socket.assigns.current_player
