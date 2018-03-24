@@ -40,6 +40,7 @@ body{
 }
 
 .area-size {
+  margin-left: 14%;
   padding-top: 10px;
   width: 400px;
   height: 550px;
@@ -47,7 +48,13 @@ body{
 
 }
 
-
+p {
+  font-size: 15px;
+  text-align: justify;
+  font-style: oblique;
+  text-rendering: optimizeLegibility;
+  color: black;
+}
 // .square:hover {
 //   box-shadow: 5px 10px #888888;
 // }
@@ -65,10 +72,26 @@ table th {
   font-size: 25px;
 }
 
+.index_page {
+  margin-left: 21%;
+}
+
 
 .game {
+  width: 1000px;
   display: grid;
   grid-template-columns: 25% 50% 25%;
+  margin-left: -18%;
+}
+
+.chat {
+  padding-left: 10%;
+}
+
+.intoduction {
+  padding-left: 15%;
+
+
 }
 
 .game-name{
@@ -92,7 +115,7 @@ table th {
 
 
 .square {
-  background: #008943;
+  background: #007F00;
   border: 3px solid #000000;
   float: left;
   font-size: 24px;
@@ -110,11 +133,17 @@ table th {
   text-align: center;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  -webkit-box-shadow: 0 0 10px #000000;
+  box-shadow: 0 0 10px #000000;
 }
 
 
 .start {
   clear: both;
+}
+
+.current_game{
+  margin-left: 30%;
 }
 
 .scores1 {
@@ -131,6 +160,6 @@ table th {
 }
 
 .shadow-board {
-  -webkit-box-shadow: 0 0 10px #696969;
-        box-shadow: 0 0 10px #696969;
+  -webkit-box-shadow: 0 0 10px #000000;
+        box-shadow: 0 0 10px #000000;
 }
