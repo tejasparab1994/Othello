@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {registerForGame, markSquare} from "../actions/game";
+import $ from 'jquery';
 
 class Game extends React.Component {
 
@@ -108,10 +109,12 @@ class Board extends React.Component{
         );
     }
 
+
+
 }
 
-const white = "◯";
-const black = "●";
+const white = &#x26AA;
+const black = &#x26AB;
 
 class Square extends React.Component {
 
@@ -142,7 +145,7 @@ class Square extends React.Component {
 
         return (
             <a className="square" onClick={this.Click.bind(this)}>
-                {this.renderDisc()}
+              {this.renderDisc()}
             </a>
         );
     }
@@ -186,13 +189,13 @@ class OppositeTurnBoard extends Board {
         console.log("Opposite board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                {score_board(this.props.gameData.player1,
-                    this.props.gameData.player2,
-                    this.props.gameData.in_progress)}
+              <div class="card card-header visible" id="info_board">
+                {this.get_info()}
+              </div>
+              {this.renderRows()}
+              {score_board(this.props.gameData.player1,
+                this.props.gameData.player2,
+              this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -245,8 +248,8 @@ class SpectatorBoard extends Board {
         console.log("Spectator board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
+              <div id="info_board">
+                {this.get_info()}
                 </div>
                 {this.renderRows()}
                 {score_board(this.props.gameData.player1,
@@ -290,18 +293,37 @@ class MyTurnBoard extends Board {
         }
 
         if (!this.props.gameData.in_progress)
-            return (<div>Waiting for Player 2 to Join</div>);
+            return (
+              <div className="card card-header visible">
+                <h5>
+                  Waiting for Player 2 to Join
+                </h5>
+              </div>);
         else
-            return (<div>This is your turn</div>);
+            return (
+              <div className = "card card-header visible">
+                <h5>
+                  This is your turn
+                </h5>
+              </div>);
     }
 }
 
 function declare_winner(winner)  {
 
     if (winner.name === window.playerName)
-        return (<div>Congratulations. You are the winner</div>);
+        return (  <div className = "card card-header visible">
+          <h3>
+            Congratulations!! You Win!!!
+          </h3>
+        </div>);
     else
-        return (<div>{winner.name +  " is the winner."}</div>)
+        return (
+          <div className = "card card-header visible">
+            <h2>
+              {winner.name +  " is the winner."}
+            </h2>
+          </div>)
 }
 
 const mapStateToProps = (state, props) => {
@@ -313,14 +335,30 @@ function score_board(player1, player2, in_progress) {
     if (in_progress) {
         return (
             <div id="score_board">
-                <div id="score_player_1">
-                    <span>Player Name: {player1.name}</span>
-                    <span>Player Score: {player1.score}</span>
-                </div>
-                <div id="score_player_2">
-                    <span>Player Name: {player2.name}</span>
-                    <span>Player Score: {player2.score}</span>
-                </div>
+              <div class= "card card-header scores1 col" id="score_player_1">
+                <span>
+                  <h5>
+                    Player Name(black): {player1.name}
+                  </h5>
+                </span>
+                <span>
+                  <h5>
+                    Player Score: {player1.score}
+                  </h5>
+                </span>
+              </div>
+              <div class="card card-header scores2 col" id="score_player_2">
+                <span>
+                  <h5>
+                    Player Name(white): {player2.name}
+                  </h5>
+                </span>
+                <span>
+                  <h5>
+                    Player Score: {player2.score}
+                  </h5>
+                </span>
+              </div>
             </div>
         );
     }

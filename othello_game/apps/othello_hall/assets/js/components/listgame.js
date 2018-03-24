@@ -9,16 +9,19 @@ export class ListGame extends React.Component {
 
     render() {
         return (
-            <tr>
+          <table className="card">
+            <tr className="card-header">
               <td>
-                {this.state.name}
+                <h5>{this.state.name}</h5>
+
               </td>
               <td>
-                <a href={getLink(this.state.name)} className="btn btn-info" role="button">
+                <a href={getLink(this.state.name)} className='btn btn-primary' role="button">
                   {!this.state.inProgress ? "Join" : "Spectate"}
                 </a>
               </td>
             </tr>
+          </table>
         );
     }
 }
