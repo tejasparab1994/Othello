@@ -21,7 +21,8 @@
     "redux": "^3.7.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "react-infinite": "0.12.1"
   },
   "devDependencies": {
     "babel-brunch": "^6.1.1",

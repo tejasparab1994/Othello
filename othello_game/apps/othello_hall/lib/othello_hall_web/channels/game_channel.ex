@@ -71,17 +71,18 @@ defmodule OthelloHallWeb.GameChannel do
     :ok
   end
 
-  def handle_in("new_chat_message", %{"body" => body, "name" => name}, socket) do
+  def handle_in("new_chat_message", %{"message" => message}, socket) do
     broadcast!(
       socket,
-      "new_chat_message",
+      "messages",
       %{
-        name: current_player(socket).name,
-        body: body
+        name: current_player(socket),
+        message: message
       }
     )
 
-    {:reply, {:ok, %{body: body, name: name}}, socket}
+#    {:reply, {:ok, %{body: body, name: name}}, socket}
+    {:reply, {:ok, %{}}, socket}
   end
 
   defp current_player(socket) do

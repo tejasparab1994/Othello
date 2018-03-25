@@ -1,5 +1,4 @@
 const initialState = {
-    gameName: null,
     gameData: null,
     gameChannel: null,
 };

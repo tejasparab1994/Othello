@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {registerForGame, markSquare} from "../actions/game";
 import $ from 'jquery';
+import ChatView from "./chat";
 
 class Game extends React.Component {
 
@@ -20,7 +21,7 @@ class Game extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+        console.log("Rendered Game");
 
         if (this.props.gameData == null) return null;
 
@@ -31,13 +32,14 @@ class Game extends React.Component {
                 <div className="shadow-board">
                   {this.getBoard()}
                 </div>
-
-
                 <div className='game-info'>
                   <div>{status}</div>
                 </div>
               </div>
-              <div className="chat">Chat will come here</div>
+              <div className="chat">
+                  <ChatView dispatch={this.props.dispatch} gameChannel={this.props.gameChannel}
+                  messages={this.props.messages}/>
+              </div>
             </div>
         );
     }
@@ -371,7 +373,7 @@ function declare_winner(winner)  {
 
 const mapStateToProps = (state, props) => {
     console.log(state);
-    return Object.assign({}, state.game, props)
+        return Object.assign({}, state.game, state.chat, props);
 }
 
 function score_board(player1, player2, in_progress) {
