@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {fetchGames} from "../actions/lobby";
-import {ListGame} from "../components/listgame"
-import {NewGame} from "../components/newgame"
+import {ListGame} from "../components/listgame";
+import {NewGame} from "../components/newgame";
 
 
 class LobbyView extends React.Component {
@@ -25,7 +25,7 @@ class LobbyView extends React.Component {
         return (
             <div id="lobby_view">
               <div className="row">
-                <div className="col-xl-6 col-xs-offset-3 text-center">
+                <div className="col-xl-6 current_game text-center">
                   <div id="current_games">
                     <table>
                       <tbody>

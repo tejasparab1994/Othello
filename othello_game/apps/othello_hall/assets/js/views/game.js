@@ -25,15 +25,51 @@ class Game extends React.Component {
         if (this.props.gameData == null) return null;
 
         return (
-            <div className="game container-fluid" key='game'>
-              <div className="game-board area-size offset-2" key='game-board'>
-                {this.getBoard()}
+            <div className="game" key='game'>
+              <div className="introduction">{this.getInfo()}</div>
+              <div className="game-board area-size" key='game-board'>
+                <div className="shadow-board">
+                  {this.getBoard()}
+                </div>
+
+
+                <div className='game-info'>
+                  <div>{status}</div>
+                </div>
               </div>
-              <div className='game-info'>
-                <div>{status}</div>
-              </div>
+              <div className="chat">Chat will come here</div>
             </div>
         );
+    }
+
+    getInfo(){
+      return(
+        <div className="container-fluid card card-header visible">
+          <h4>
+            How to Play Othello
+          </h4>
+          <p>
+            Players battle to finish the game with more of their own pieces on
+            the board than their opponent. The game is classed as finished when
+            there are no spaces left on the board or there are no more possible
+            legal moves for either competitor.
+          </p>
+          <h5>
+            The Game
+          </h5>
+          <p>
+            A legal move is one that consists of, for example, a black piece
+            being placed on the board that creates a straight line
+            (vertical, horizontal or diagonal) made up of a black piece at
+            either end and only white pieces in between. When a player
+            achieves this, any white pieces between the two black are turned
+            black so that the line becomes entirely black. Same applies if you
+            play as white.
+
+          </p>
+        </div>
+
+      );
     }
 
     getBoard() {
@@ -75,7 +111,7 @@ class Board extends React.Component{
         }
         return (
             <div key={'row' + r}>
-                {row}
+              {row}
             </div>
         );
     }
@@ -87,7 +123,7 @@ class Board extends React.Component{
         }
         return (
             <div>
-                {rows}
+              {rows}
             </div>
         );
     }
@@ -165,7 +201,7 @@ class OppositeTurnBoard extends Board {
           value={this.props.gameData.squares[i][j]}
           gameChannel={this.props.gameChannel}
           clickable={false}
-                       dispatch={this.props.dispatch}/>;
+          dispatch={this.props.dispatch}/>;
     }
 
     renderRow(r) {

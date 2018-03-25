@@ -1,5 +1,3 @@
-
-
 const initialState = {
     gameName: null,
     gameData: null,
