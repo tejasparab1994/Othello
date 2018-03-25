@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {fetchGames} from "../actions/lobby";
-import {ListGame} from "../components/listgame"
-import {NewGame} from "../components/newgame"
+import {ListGame} from "../components/listgame";
+import {NewGame} from "../components/newgame";
 
 
 class LobbyView extends React.Component {

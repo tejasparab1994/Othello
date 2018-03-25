@@ -103,7 +103,7 @@ defmodule OthelloHallWeb.GameChannel do
   end
 
   def handle_in("new_chat_message", %{"body" => body, "name" => name}, socket) do
-    broadcast!(socket, "new_chat_message", %{
+    broadcast!(socket, "new_chat_receive", %{
       name: current_player(socket).name,
       body: body
     })
