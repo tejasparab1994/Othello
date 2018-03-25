@@ -12,11 +12,8 @@ defmodule OthelloHallWeb.GameController do
 
   def create(conn, _) do
     game_name = OthelloHall.HaikuName.generate()
-    # IO.inspect("this is current player")
     current_player = get_session(conn, :current_player)
-    # IO.inspect(current_player.color)
     current_player = %{current_player | color: "black"}
-    # IO.inspect(current_player)
 
     case GameSupervisor.start_game(game_name) do
       {:ok, _game_pid} ->
@@ -26,7 +23,7 @@ defmodule OthelloHallWeb.GameController do
       {:error, _error} ->
         conn
         |> put_flash(:error, "Unable to start game!")
-        |> redirect(to: game_path(conn, :new))
+        |> redirect(to: page_path(conn, :lobby))
     end
   end
 
@@ -35,13 +32,12 @@ defmodule OthelloHallWeb.GameController do
       pid when is_pid(pid) ->
         conn
         |> assign(:game_name, game_name)
-        |> assign(:auth_token, generate_auth_token(conn))
         |> render("show.html", current_player: get_session(conn, :current_player))
 
       nil ->
         conn
         |> put_flash(:error, "Game not found!")
-        |> redirect(to: game_path(conn, :new))
+        |> redirect(to: page_path(conn, :lobby))
     end
   end
 

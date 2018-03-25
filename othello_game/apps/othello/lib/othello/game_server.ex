@@ -2,9 +2,6 @@ defmodule Othello.GameServer do
   @moduledoc """
   A game server process that holds a `Game` struct as its state.
   """
-  # this is a thin module that delegates jobs to the game logic
-  # we took sequential code(i.e. game logic) and then made it concurrent by layering
-  # the genserver module
   use GenServer
 
   require Logger
@@ -66,14 +63,7 @@ defmodule Othello.GameServer do
     |> GenServer.whereis()
   end
 
-  # Server Callbacks
-
   def init({game_name, size}) do
-    # pattern matching cases on game name, if ets.lookup returns empty, then
-    # its a new game name, and thus create a new game and insert it into the
-    # ets table
-    # but if the game name already exists in the ets table, then just reload the
-    # game using the game state stored in the table
     game =
       case :ets.lookup(:games_table, game_name) do
         [] ->
@@ -142,9 +132,6 @@ defmodule Othello.GameServer do
     :ok
   end
 
-  # Registry.keys returns the keys for the given pid
-  # will return list, but our ets table has unique keys, hence will always be
-  # a list with single value, hence get list.first
   defp my_game_name do
     Registry.keys(Othello.GameRegistry, self()) |> List.first()
   end

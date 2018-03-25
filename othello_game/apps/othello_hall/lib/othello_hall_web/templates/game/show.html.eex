@@ -4,6 +4,14 @@
   window.playerName = '<%= @current_player.name %>'
 </script>
 
-<div id="startGame">
+<style>
+   body {
+     background-image: url("<%= static_path(@conn, "/images/wood3.png") %>");
+   }
+ </style>
 
-</div>
+<body>
+  <div id="startGame">
+
+  </div>
+</body>

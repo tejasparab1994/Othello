@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {registerForGame, markSquare} from "../actions/game";
+import $ from 'jquery';
 
 class Game extends React.Component {
 
@@ -25,12 +26,12 @@ class Game extends React.Component {
 
         return (
             <div className="game container-fluid" key='game'>
-                <div className="game-board area-size offset-2" key='game-board'>
-                    {this.getBoard()}
-                </div>
-                <div className='game-info'>
-                    <div>{status}</div>
-                </div>
+              <div className="game-board area-size offset-2" key='game-board'>
+                {this.getBoard()}
+              </div>
+              <div className='game-info'>
+                <div>{status}</div>
+              </div>
             </div>
         );
     }
@@ -43,22 +44,22 @@ class Game extends React.Component {
         if (next_turn.name === window.playerName) {
             return (
                 <MyTurnBoard dispatch={this.props.dispatch}
-                             gameData={this.props.gameData}
-                             gameChannel={this.props.gameChannel}/>
+                  gameData={this.props.gameData}
+                  gameChannel={this.props.gameChannel}/>
             );
         }
         else if (player1.name === window.playerName || player2.name === window.playerName) {
             return (
                 <OppositeTurnBoard dispatch={this.props.dispatch}
-                                   gameChannel={this.props.gameChannel}
-                                   gameData={this.props.gameData}/>
+                  gameChannel={this.props.gameChannel}
+                  gameData={this.props.gameData}/>
             );
         }
         else {
             return (
                 <SpectatorBoard dispatch={this.props.dispatch}
-                                gameChannel={this.props.gameChannel}
-                                gameData={this.props.gameData}/>
+                  gameChannel={this.props.gameChannel}
+                  gameData={this.props.gameData}/>
             );
         }
     }
@@ -95,23 +96,23 @@ class Board extends React.Component{
         console.log("My turn board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                <div id="score_board">
-                    {score_board(this.props.gameData.player1,
-                        this.props.gameData.player2,
-                        this.props.gameData.in_progress)}
-                </div>
+              <div id="info_board">
+                {this.get_info()}
+              </div>
+              {this.renderRows()}
+              <div id="score_board">
+                {score_board(this.props.gameData.player1,
+                  this.props.gameData.player2,
+                this.props.gameData.in_progress)}
+              </div>
             </div>
         );
     }
 
 }
 
-const white = "◯";
-const black = "●";
+const white = "⚪";
+const black = "⚫";
 
 class Square extends React.Component {
 
@@ -141,10 +142,19 @@ class Square extends React.Component {
     render() {
 
         return (
-            <a className="square" onClick={this.Click.bind(this)}>
-                {this.renderDisc()}
+            <a className="square" style={this.setStyle()} onClick={this.Click.bind(this)}>
+              {this.renderDisc()}
             </a>
         );
+    }
+
+    setStyle()   {
+        if (!this.props.value.disabled && this.props.clickable) {
+            return {backgroundColor: 'red'}
+        }
+        else {
+            return null;
+        }
     }
 }
 
@@ -152,9 +162,9 @@ class OppositeTurnBoard extends Board {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       clickable={false}
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          clickable={false}
                        dispatch={this.props.dispatch}/>;
     }
 
@@ -186,13 +196,13 @@ class OppositeTurnBoard extends Board {
         console.log("Opposite board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                {score_board(this.props.gameData.player1,
-                    this.props.gameData.player2,
-                    this.props.gameData.in_progress)}
+              <div class="card card-header visible" id="info_board">
+                {this.get_info()}
+              </div>
+              {this.renderRows()}
+              {score_board(this.props.gameData.player1,
+                this.props.gameData.player2,
+              this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -211,10 +221,10 @@ class OppositeTurnBoard extends Board {
 class SpectatorBoard extends Board {
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       dispatch={this.props.dispatch}
-                       clickable={false}/>;
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          dispatch={this.props.dispatch}
+          clickable={false}/>;
     }
 
     renderRow(r) {
@@ -245,13 +255,13 @@ class SpectatorBoard extends Board {
         console.log("Spectator board is rendered");
         return (
             <div>
-                <div id="info_board">
-                    {this.get_info()}
-                </div>
-                {this.renderRows()}
-                {score_board(this.props.gameData.player1,
-                    this.props.gameData.player2,
-                    this.props.gameData.in_progress)}
+              <div class="card card-header visible" id="info_board">
+                {this.get_info()}
+              </div>
+              {this.renderRows()}
+              {score_board(this.props.gameData.player1,
+                this.props.gameData.player2,
+              this.props.gameData.in_progress)}
             </div>
         );
     }
@@ -277,10 +287,10 @@ class MyTurnBoard extends Board {
 
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
-                       value={this.props.gameData.squares[i][j]}
-                       gameChannel={this.props.gameChannel}
-                       dispatch={this.props.dispatch}
-                       clickable={this.props.gameData.in_progress && true}/>;
+          value={this.props.gameData.squares[i][j]}
+          gameChannel={this.props.gameChannel}
+          dispatch={this.props.dispatch}
+          clickable={this.props.gameData.in_progress && true}/>;
     }
 
     get_info() {
@@ -290,18 +300,37 @@ class MyTurnBoard extends Board {
         }
 
         if (!this.props.gameData.in_progress)
-            return (<div>Waiting for Player 2 to Join</div>);
+            return (
+              <div className="card card-header visible">
+                <h5>
+                  Waiting for Player 2 to Join
+                </h5>
+              </div>);
         else
-            return (<div>This is your turn</div>);
+            return (
+              <div className = "card card-header visible">
+                <b>
+                  This is your turn
+                </b>
+              </div>);
     }
 }
 
 function declare_winner(winner)  {
 
     if (winner.name === window.playerName)
-        return (<div>Congratulations. You are the winner</div>);
+        return (  <div className = "card card-header visible">
+          <h3>
+            Congratulations!! You Win!!!
+          </h3>
+        </div>);
     else
-        return (<div>{winner.name +  " is the winner."}</div>)
+        return (
+          <div className = "card card-header visible">
+            <h2>
+              {winner.name +  " is the winner."}
+            </h2>
+          </div>)
 }
 
 const mapStateToProps = (state, props) => {
@@ -313,14 +342,30 @@ function score_board(player1, player2, in_progress) {
     if (in_progress) {
         return (
             <div id="score_board">
-                <div id="score_player_1">
-                    <span>Player Name: {player1.name}</span>
-                    <span>Player Score: {player1.score}</span>
-                </div>
-                <div id="score_player_2">
-                    <span>Player Name: {player2.name}</span>
-                    <span>Player Score: {player2.score}</span>
-                </div>
+              <div class= "card card-header scores1 col" id="score_player_1">
+                <span>
+                  <h5>
+                    Player Name(black): {player1.name}
+                  </h5>
+                </span>
+                <span>
+                  <h5>
+                    Player Score: {player1.score}
+                  </h5>
+                </span>
+              </div>
+              <div class="card card-header scores2 col" id="score_player_2">
+                <span>
+                  <h5>
+                    Player Name(white): {player2.name}
+                  </h5>
+                </span>
+                <span>
+                  <h5>
+                    Player Score: {player2.score}
+                  </h5>
+                </span>
+              </div>
             </div>
         );
     }

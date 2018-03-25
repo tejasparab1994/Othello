@@ -21,17 +21,20 @@
   <body>
     <div class="container">
       <header>
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li>
-              <%= link "Switch Player",
-                       to: page_path(@conn, :delete),
-                       method: :delete %>
-            </li>
-          </ul>
-        </nav>
+        <div>
+          <nav>
+            <ul class="nav nav-pills pull-right">
+              <li>
+                <%= link "Switch Player",
+                         to: page_path(@conn, :delete),
+                         method: :delete, class: "btn btn-danger btn-xs" %>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
         <div class="row">
-          <div class="col-xs-12 text-center">
+          <div class="col-xs-12 text-center offset-2">
             <div class="letters">
               <span class="letter inverse">O</span>
               <span class="letter">T</span>
