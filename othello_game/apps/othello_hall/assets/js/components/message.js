@@ -8,6 +8,6 @@ export class Message extends React.Component{
         let playerName = this.props.message.name === window.playerName ?
             "You" : this.props.message.name;
 
-        return (<div>{playerName + " says " + message}</div>);
+        return (<div className="individual_message">{playerName + " : " + message}</div>);
     }
 }

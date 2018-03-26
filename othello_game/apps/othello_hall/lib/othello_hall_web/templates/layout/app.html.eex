@@ -16,7 +16,7 @@
       <nav>
       <%= if @current_player != nil do %>
         <ul class="nav justify-content-end switch">
-        <li>
+        <li class="lobby">
                               <%= link "Go To Lobby",
                                        to: page_path(@conn, :lobby),
                                        class: "btn btn-info btn-xs" %>

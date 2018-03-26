@@ -1,15 +1,27 @@
-<div class="row">
-  <div class="col-xs-8 index_page text-center">
-    <h1>Welcome!</h1>
-    <h4>First up, we need your name:</h4>
-    <%= form_for @conn, page_path(@conn, :create), [as: :player], fn f -> %>
+
+<!-- Attribution for image:https://cdn.pocket-lint.com/r/s/970x/assets/images/121480-phones-news-white-nexus-4-pictures-and-hands-on-image1-enoltmopdt.jpg` -->
+<style>
+body  {
+  background-image: url("<%= static_path(@conn, "/images/board.jpg") %>");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+
+<body>
+  <div class="row">
+    <div class="col-xs-8 index_page text-center">
+      <h1>Welcome!</h1>
+      <h4>First up, we need your name:</h4>
+      <%= form_for @conn, page_path(@conn, :create), [as: :player], fn f -> %>
       <div class="form-group">
         <%= text_input f, :name,
-                          placeholder: "Name",
-                          autofocus: true,
-                          required: true %>
+        placeholder: "Name",
+        autofocus: true,
+        required: true %>
       </div>
       <%= submit "Enter Lobby", class: "btn btn-primary btn-lg" %>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+</body>

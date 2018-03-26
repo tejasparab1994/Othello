@@ -47,7 +47,9 @@ class Game extends React.Component {
       return(
         <div className="container-fluid card card-header visible">
           <h4>
-            How to Play Othello
+            <u>
+              How to Play Othello
+            </u>
           </h4>
           <p>
             Players battle to finish the game with more of their own pieces on
@@ -56,7 +58,9 @@ class Game extends React.Component {
             legal moves for either competitor.
           </p>
           <h5>
-            The Game
+            <u>
+              The Game
+            </u>
           </h5>
           <p>
             A legal move is one that consists of, for example, a black piece
@@ -183,7 +187,7 @@ class Square extends React.Component {
 
     setStyle()   {
         if (!this.props.value.disabled && this.props.clickable) {
-            return {backgroundColor: 'red'}
+            return {backgroundColor: '#B20000'}
         }
         else {
             return null;
@@ -334,14 +338,14 @@ class MyTurnBoard extends Board {
 
         if (!this.props.gameData.in_progress)
             return (
-              <div className="card card-header visible">
-                <h5>
+              <div >
+                <h4>
                   Waiting for Player 2 to Join
-                </h5>
+                </h4>
               </div>);
         else
             return (
-              <div className = "card card-header visible">
+              <div>
                 <b>
                   This is your turn
                 </b>
@@ -369,30 +373,35 @@ function declare_winner(winner)  {
 function score_board(player1, player2, in_progress, winner) {
     if (winner != null || in_progress) {
         return (
-            <div id="score_board">
+            <div class="score_card" id="score_board">
               <div className = "card card-header scores1 col" id="score_player_1">
-                <span>
-                  <h5>
-                    Player Name(black): {player1.name}
-                  </h5>
-                </span>
-                <span>
-                  <h5>
-                    Player Score: {player1.score}
-                  </h5>
-                </span>
+                <h5>
+
+                  Name(⚫):
+                  <b>
+                    {player1.name}
+                  </b>
+                </h5>
+                <h5>
+                  Score:
+                  <b>
+                    {player1.score}
+                  </b>
+                </h5>
               </div>
+
               <div className ="card card-header scores2 col" id="score_player_2">
-                <span>
-                  <h5>
-                    Player Name(white): {player2.name}
-                  </h5>
-                </span>
-                <span>
-                  <h5>
-                    Player Score: {player2.score}
-                  </h5>
-                </span>
+                <h5>
+                  Name(⚪):
+                  <b>
+                    {player2.name}
+                  </b>
+                </h5>
+
+                <h5>
+
+                  Score: <b>{player2.score}</b>
+                </h5>
               </div>
             </div>
         );

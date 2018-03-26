@@ -91,6 +91,7 @@ table th {
 .message_box  {
   height: 500px;
   overflow-y: scroll;
+  border-radius: 25px;
 }
 
 .intoduction {
@@ -99,6 +100,16 @@ table th {
 
 .game-name{
   margin-left: 22%;
+}
+
+.index_page h1 {
+   color: white;
+   text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.index_page h4 {
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
 }
 
 
@@ -162,7 +173,48 @@ table th {
   margin-right: 10px;
 }
 
+.lobby {
+  margin-right: 10px;
+}
+
 .shadow-board {
   -webkit-box-shadow: 0 0 10px #000000;
         box-shadow: 0 0 10px #000000;
+}
+
+.individual_message:nth-child(odd) {
+  padding-top: 10px;
+  background:  #0072C6;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-bottom: 10px;
+  padding-left: 4px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  color: white;
+  border-radius: 15px;
+}
+
+.individual_message:nth-child(even) {
+  background: #c0c5ce;
+  margin-bottom: 10px;
+  text-shadow: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 4px;
+  font-size: 15px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+
+  padding-left: 4px;
+  border-radius: 15px;
+  color: black;
+  font-weight: 600;
+
+
+}
+
+.text_entry {
+  width: 223px;
 }

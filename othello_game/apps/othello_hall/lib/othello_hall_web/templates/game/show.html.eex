@@ -5,6 +5,8 @@
 </script>
 
 <style>
+
+/* Attribution for image: https://i.stack.imgur.com/jGlzr.png */
    body {
      background-image: url("<%= static_path(@conn, "/images/wood3.png") %>");
    }
