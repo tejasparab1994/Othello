@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {registerForGame, markSquare} from "../actions/game";
-import $ from 'jquery';
 import ChatView from "./chat";
 
 class Game extends React.Component {
@@ -131,18 +130,16 @@ class Board extends React.Component{
     }
 
     render() {
-        console.log("My turn board is rendered");
         return (
             <div>
-              <div id="info_board">
-                {this.get_info()}
-              </div>
-              {this.renderRows()}
-              <div id="score_board">
+                <div className="card card-header visible" id="info_board">
+                    {this.get_info()}
+                </div>
+                {this.renderRows()}
                 {score_board(this.props.gameData.player1,
-                  this.props.gameData.player2,
-                this.props.gameData.in_progress)}
-              </div>
+                    this.props.gameData.player2,
+                    this.props.gameData.in_progress,
+                    this.props.gameData.winner)}
             </div>
         );
     }
@@ -155,13 +152,11 @@ const black = "⚫";
 class Square extends React.Component {
 
     Click() {
-        console.log(!this.props.value.disabled);
-        console.log(this.props.clickable);
         if (!this.props.value.disabled && this.props.clickable) {
             this.props.dispatch(markSquare(this.props.value.i, this.props.value.j, this.props.gameChannel))
         }
         else {
-            window.alert("You are not allowed to click");
+            window.alert("You are not allowed to click here");
         }
     }
 
@@ -206,44 +201,44 @@ class OppositeTurnBoard extends Board {
           dispatch={this.props.dispatch}/>;
     }
 
-    renderRow(r) {
-        var row = [];
-        for (var i = 0; i < 8; i++) {
-            row.push(this.renderSquare(r, i));
-        }
-        return (
-            <div key={'row' + r}>
-                {row}
-            </div>
-        );
-    }
-
-    renderRows() {
-        var rows = [];
-        for (var i = 0; i < 8; i++) {
-            rows.push(this.renderRow(i));
-        }
-        return (
-            <div>
-                {rows}
-            </div>
-        );
-    }
-
-    render() {
-        console.log("Opposite board is rendered");
-        return (
-            <div>
-              <div class="card card-header visible" id="info_board">
-                {this.get_info()}
-              </div>
-              {this.renderRows()}
-              {score_board(this.props.gameData.player1,
-                this.props.gameData.player2,
-              this.props.gameData.in_progress)}
-            </div>
-        );
-    }
+    // renderRow(r) {
+    //     var row = [];
+    //     for (var i = 0; i < 8; i++) {
+    //         row.push(this.renderSquare(r, i));
+    //     }
+    //     return (
+    //         <div key={'row' + r}>
+    //             {row}
+    //         </div>
+    //     );
+    // }
+    //
+    // renderRows() {
+    //     var rows = [];
+    //     for (var i = 0; i < 8; i++) {
+    //         rows.push(this.renderRow(i));
+    //     }
+    //     return (
+    //         <div>
+    //             {rows}
+    //         </div>
+    //     );
+    // }
+    //
+    // render() {
+    //     console.log("Opposite board is rendered");
+    //     return (
+    //         <div>
+    //           <div class="card card-header visible" id="info_board">
+    //             {this.get_info()}
+    //           </div>
+    //           {this.renderRows()}
+    //           {score_board(this.props.gameData.player1,
+    //             this.props.gameData.player2,
+    //           this.props.gameData.in_progress)}
+    //         </div>
+    //     );
+    // }
 
     get_info() {
         if (this.props.gameData.winner != null) {
@@ -265,44 +260,44 @@ class SpectatorBoard extends Board {
           clickable={false}/>;
     }
 
-    renderRow(r) {
-        var row = [];
-        for (var i = 0; i < 8; i++) {
-            row.push(this.renderSquare(r, i));
-        }
-        return (
-            <div key={'row' + r}>
-                {row}
-            </div>
-        );
-    }
-
-    renderRows() {
-        var rows = [];
-        for (var i = 0; i < 8; i++) {
-            rows.push(this.renderRow(i));
-        }
-        return (
-            <div>
-                {rows}
-            </div>
-        );
-    }
-
-    render() {
-        console.log("Spectator board is rendered");
-        return (
-            <div>
-              <div class="card card-header visible" id="info_board">
-                {this.get_info()}
-              </div>
-              {this.renderRows()}
-              {score_board(this.props.gameData.player1,
-                this.props.gameData.player2,
-              this.props.gameData.in_progress)}
-            </div>
-        );
-    }
+    // renderRow(r) {
+    //     var row = [];
+    //     for (var i = 0; i < 8; i++) {
+    //         row.push(this.renderSquare(r, i));
+    //     }
+    //     return (
+    //         <div key={'row' + r}>
+    //             {row}
+    //         </div>
+    //     );
+    // }
+    //
+    // renderRows() {
+    //     var rows = [];
+    //     for (var i = 0; i < 8; i++) {
+    //         rows.push(this.renderRow(i));
+    //     }
+    //     return (
+    //         <div>
+    //             {rows}
+    //         </div>
+    //     );
+    // }
+    //
+    // render() {
+    //     console.log("Spectator board is rendered");
+    //     return (
+    //         <div>
+    //           <div class="card card-header visible" id="info_board">
+    //             {this.get_info()}
+    //           </div>
+    //           {this.renderRows()}
+    //           {score_board(this.props.gameData.player1,
+    //             this.props.gameData.player2,
+    //           this.props.gameData.in_progress)}
+    //         </div>
+    //     );
+    // }
 
     get_info() {
 
@@ -371,16 +366,11 @@ function declare_winner(winner)  {
           </div>)
 }
 
-const mapStateToProps = (state, props) => {
-    console.log(state);
-        return Object.assign({}, state.game, state.chat, props);
-}
-
-function score_board(player1, player2, in_progress) {
-    if (in_progress) {
+function score_board(player1, player2, in_progress, winner) {
+    if (winner != null || in_progress) {
         return (
             <div id="score_board">
-              <div class= "card card-header scores1 col" id="score_player_1">
+              <div className = "card card-header scores1 col" id="score_player_1">
                 <span>
                   <h5>
                     Player Name(black): {player1.name}
@@ -392,7 +382,7 @@ function score_board(player1, player2, in_progress) {
                   </h5>
                 </span>
               </div>
-              <div class="card card-header scores2 col" id="score_player_2">
+              <div className ="card card-header scores2 col" id="score_player_2">
                 <span>
                   <h5>
                     Player Name(white): {player2.name}
@@ -409,6 +399,11 @@ function score_board(player1, player2, in_progress) {
     }
 
     return null;
+}
+
+const mapStateToProps = (state, props) => {
+    console.log(state);
+    return Object.assign({}, state.game, state.chat, props);
 }
 
 export default connect(mapStateToProps)(Game);
