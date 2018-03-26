@@ -1,13 +1,13 @@
 import { combineReducers }  from 'redux';
 import { routerReducer }    from 'react-router-redux';
-import session              from './session';
 import lobby                 from './lobby';
 import game                 from './game';
+import chat                 from './chat';
 
 
 export default combineReducers({
   routing: routerReducer,
-  session: session,
   lobby: lobby,
-  game: game
+  game: game,
+  chat: chat
 });
