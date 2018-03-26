@@ -11,23 +11,25 @@ export default class Chat extends React.Component{
         this.props.dispatch(listen_for_messages(this.props.gameChannel));
     }
 
+    componentDidUpdate() {
+        var objDiv = document.getElementsByClassName("message_box")[0];
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
     render()    {
-        const messagesList = this.props.messages.map(message => {
+        const messagesList = this.props.messages.map((message, index) => {
             {
                 console.log(message);
             }
             return (
-                <Message key={message} message={message}/>
+                <Message key={index} message={message}/>
             );
         });
 
         return(
             <div id="chat_box">
-                <div id="message_box">
-                    <Infinite containerHeight={200} elementHeight={40}
-                              displayBottomUpwards>
-                        {messagesList}
-                    </Infinite>
+                <div className="message_box">
+                    {messagesList}
                 </div>
                 <div id="text_box">
                     <input placeholder="Press Enter to send" onKeyDown={this.keyPress.bind(this)} />
