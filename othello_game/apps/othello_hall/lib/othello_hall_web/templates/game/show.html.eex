@@ -3,7 +3,7 @@
   window.gameName = "<%= @game_name %>";
   window.playerName = '<%= @current_player.name %>'
 </script>
-
+<!-- Attribution for image:https://i.stack.imgur.com/jGlzr.png -->
 <style>
    body {
      background-image: url("<%= static_path(@conn, "/images/wood3.png") %>");

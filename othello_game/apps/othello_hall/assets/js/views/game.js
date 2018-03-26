@@ -46,7 +46,9 @@ class Game extends React.Component {
       return(
         <div className="container-fluid card card-header visible">
           <h4>
-            How to Play Othello
+            <u>
+              How to Play Othello
+            </u>
           </h4>
           <p>
             Players battle to finish the game with more of their own pieces on
@@ -55,7 +57,9 @@ class Game extends React.Component {
             legal moves for either competitor.
           </p>
           <h5>
-            The Game
+            <u>
+              The Game
+            </u>
           </h5>
           <p>
             A legal move is one that consists of, for example, a black piece
@@ -64,7 +68,8 @@ class Game extends React.Component {
             either end and only white pieces in between. When a player
             achieves this, any white pieces between the two black are turned
             black so that the line becomes entirely black. Same applies if you
-            play as white.
+            play as white. The red squares represent the possible available moves
+            for the player.
 
           </p>
         </div>
@@ -100,7 +105,7 @@ class Game extends React.Component {
         }
     }
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 
 class Board extends React.Component{
 
@@ -147,6 +152,8 @@ class Board extends React.Component{
 
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+
 const white = "⚪";
 const black = "⚫";
 
@@ -186,13 +193,15 @@ class Square extends React.Component {
 
     setStyle()   {
         if (!this.props.value.disabled && this.props.clickable) {
-            return {backgroundColor: 'red'}
+            return {backgroundColor: '#8E0000'}
         }
         else {
             return null;
         }
     }
 }
+
+//////////////////////////////////////////////////////////////////////////////////
 
 class OppositeTurnBoard extends Board {
 
@@ -211,7 +220,7 @@ class OppositeTurnBoard extends Board {
         }
         return (
             <div key={'row' + r}>
-                {row}
+              {row}
             </div>
         );
     }
@@ -223,7 +232,7 @@ class OppositeTurnBoard extends Board {
         }
         return (
             <div>
-                {rows}
+              {rows}
             </div>
         );
     }
@@ -254,6 +263,8 @@ class OppositeTurnBoard extends Board {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+
 class SpectatorBoard extends Board {
     renderSquare(i, j) {
         return <Square key={'square' + i + j}
@@ -270,7 +281,7 @@ class SpectatorBoard extends Board {
         }
         return (
             <div key={'row' + r}>
-                {row}
+              {row}
             </div>
         );
     }
@@ -282,7 +293,7 @@ class SpectatorBoard extends Board {
         }
         return (
             <div>
-                {rows}
+              {rows}
             </div>
         );
     }
@@ -314,6 +325,7 @@ class SpectatorBoard extends Board {
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////
 
 class MyTurnBoard extends Board {
 
