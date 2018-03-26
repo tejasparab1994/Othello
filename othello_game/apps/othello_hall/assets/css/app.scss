@@ -91,7 +91,7 @@ table th {
 .message_box  {
   height: 480px;
   overflow-y: scroll;
-  border-radius: 15px;
+  background-color: #DEB887;
 }
 
 .intoduction {
@@ -129,7 +129,7 @@ table th {
 
 
 .square {
-  background: #007F00;
+  background: #228B22;
   border: 3px solid #000000;
   float: left;
   font-size: 24px;
@@ -184,7 +184,7 @@ table th {
 
 .individual_message:nth-child(odd) {
   padding-top: 10px;
-  background:  #0072C6;
+  background:  	#ADFF2F;
   margin-bottom: 10px;
   text-align: left;
   padding-bottom: 10px;
@@ -192,12 +192,13 @@ table th {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
   font-size: 15px;
-  color: white;
+  color: black;
   border-radius: 15px;
+  font-weight: 600;
 }
 
 .individual_message:nth-child(even) {
-  background: #c0c5ce;
+  background: #323232;
   margin-bottom: 10px;
   text-shadow: 2px;
   padding-top: 10px;
@@ -209,10 +210,7 @@ table th {
 
   padding-left: 4px;
   border-radius: 15px;
-  color: black;
-  font-weight: 600;
-
-
+  color: white;
 }
 
 .text_entry {
