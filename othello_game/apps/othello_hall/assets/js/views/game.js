@@ -36,6 +36,11 @@ class Game extends React.Component {
                 </div>
               </div>
               <div className="chat">
+                <div className="chat_heading">
+                  <h4>
+                    CHAT
+                  </h4>
+                </div>
                   <ChatView dispatch={this.props.dispatch} gameChannel={this.props.gameChannel}
                   messages={this.props.messages}/>
               </div>
