@@ -100,8 +100,9 @@ table th {
 }
 
 .message_box  {
-  height: 500px;
+  height: 480px;
   overflow-y: scroll;
+  background-color: #DEB887;
 }
 
 .intoduction {
@@ -110,6 +111,16 @@ table th {
 
 .game-name{
   margin-left: 22%;
+}
+
+.index_page h1 {
+   color: white;
+   text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.index_page h4 {
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
 }
 
 
@@ -131,7 +142,7 @@ table th {
 
 
 .square {
-  background: #007F00;
+  background: #228B22;
   border: 3px solid #000000;
   float: left;
   font-size: 24px;
@@ -175,7 +186,57 @@ table th {
   margin-right: 10px;
 }
 
+.lobby {
+  margin-right: 10px;
+}
+
 .shadow-board {
   -webkit-box-shadow: 0 0 10px #000000;
         box-shadow: 0 0 10px #000000;
+}
+
+.individual_message:nth-child(odd) {
+  padding-top: 10px;
+  background:  	#ADFF2F;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-bottom: 10px;
+  padding-left: 4px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  color: black;
+  border-radius: 15px;
+  font-weight: 600;
+}
+
+.individual_message:nth-child(even) {
+  background: #323232;
+  margin-bottom: 10px;
+  text-shadow: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 4px;
+  font-size: 15px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+
+  padding-left: 4px;
+  border-radius: 15px;
+  color: white;
+}
+
+.text_entry {
+  width: 223px;
+}
+
+.chat_heading {
+  background: #000000;
+  color: white;
+  text-shadow: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  border-radius: 5px;
 }

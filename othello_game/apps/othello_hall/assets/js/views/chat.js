@@ -26,13 +26,13 @@ export default class Chat extends React.Component{
         });
 
         return(
-            <div id="chat_box">
-                <div className="message_box">
-                    {messagesList}
-                </div>
-                <div id="text_box">
-                    <input placeholder="Press Enter to send" onKeyDown={this.keyPress.bind(this)} />
-                </div>
+            <div className="card" id="chat_box">
+              <div className="message_box">
+                {messagesList}
+              </div>
+              <div class="text_entry" id="text_box">
+                <input placeholder="Press Enter to send" class="form-control" onKeyDown={this.keyPress.bind(this)} />
+              </div>
             </div>
         );
     }

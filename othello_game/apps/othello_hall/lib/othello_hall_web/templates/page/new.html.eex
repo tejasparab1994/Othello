@@ -1,15 +1,14 @@
+
+<!-- Attribution for image:https://cdn.pocket-lint.com/r/s/970x/assets/images/121480-phones-news-white-nexus-4-pictures-and-hands-on-image1-enoltmopdt.jpg` -->
 <style>
+body  {
+  background-image: url("<%= static_path(@conn, "/images/board.jpg") %>");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
 
-/* Attribution for image:
- https://cdn.pocket-lint.com/r/s/970x/assets/images/121480-phones-news-white-nexus-4-pictures-and-hands-on-image1-enoltmopdt.jpg */
-   body {
-     background-image: url("<%= static_path(@conn, "/images/board.jpg") %>");
-     background-repeat: no-repeat;
-     background-size: cover;
-   }
- </style>
-
-<body class= "index_othello">
+<body>
   <div class="row">
     <div class="col-xs-8 index_page text-center">
       <h1>Welcome!</h1>
