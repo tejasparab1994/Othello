@@ -31,7 +31,10 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 
 const target = document.getElementById('main_container');
-const node = <Root routerHistory={history} store={store}/>;
 
-ReactDOM.render(node, target);
+if (target != null) {
+    const node = <Root routerHistory={history} store={store}/>;
+    ReactDOM.render(node, target);
+}
+
 

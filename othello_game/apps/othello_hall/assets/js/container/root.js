@@ -18,8 +18,8 @@ export default class Root extends React.Component {
         return (
             <Router history={this.props.routerHistory}>
               <div>
-                <Route path="/lobby" component={LobbyView}/>
-                <Route path="/games/:gameName" render={(props) =>
+                <Route exact path={"/"} component={LobbyView}/>
+                <Route path={"/games/:gameName"} render={(props) =>
                 { return <GameView gameName={props.match.params.gameName} /> }} />
                 </div>
             </Router>

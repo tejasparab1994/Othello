@@ -8,7 +8,6 @@ import {NewGame} from "../components/newgame";
 
 class LobbyView extends React.Component {
     componentDidMount() {
-        console.log("Component is mounted. Thank God!!!");
         const {dispatch, lobby} = this.props;
 
         if (lobby == null) {
@@ -18,6 +17,7 @@ class LobbyView extends React.Component {
             lobby.join();
             dispatch(fetchGames(lobby))
         } else dispatch(fetchGames(lobby));
+
     }
 
     render() {

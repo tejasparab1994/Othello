@@ -1,5 +1,7 @@
 <script>
+<%= if @current_player do %>
 window.playerName = '<%= @current_player.name %>';
+<% end %>
 </script>
 
 
@@ -10,6 +12,7 @@ window.playerName = '<%= @current_player.name %>';
    }
  </style>
 
+<%= if @current_player != nil do %>
 <body>
   <div class="row" >
     <div class="col-xs-8 offset-2 text-center game-name">
@@ -20,10 +23,27 @@ window.playerName = '<%= @current_player.name %>';
     <%= submit "Start Game", class: "btn btn-success btn-lg" %>
     <% end %>
   </div>
+ </div>
+   <div id="main_container">
 
-
-  <div id="root">
-
-  </div>
-</div>
+   </div>
 </body>
+<% else %>
+<body class= "index_othello">
+  <div class="row">
+    <div class="col-xs-8 index_page text-center">
+      <h1>Welcome!</h1>
+      <h4>First up, we need your name:</h4>
+      <%= form_for @conn, page_path(@conn, :create), [as: :player], fn f -> %>
+      <div class="form-group">
+        <%= text_input f, :name,
+        placeholder: "Name",
+        autofocus: true,
+        required: true %>
+      </div>
+      <%= submit "Enter Lobby", class: "btn btn-primary btn-lg" %>
+      <% end %>
+    </div>
+  </div>
+</body>
+ <% end %>

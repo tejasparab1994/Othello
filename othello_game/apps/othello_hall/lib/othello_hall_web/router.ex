@@ -23,7 +23,7 @@ defmodule OthelloHallWeb.Router do
     # Use the default browser stack
     pipe_through(:browser)
 
-    get("/", PageController, :new)
+    get("/", PageController, :index)
     get("/lobby", PageController, :lobby)
 
     resources("/games", GameController, only: [:new, :create, :show])

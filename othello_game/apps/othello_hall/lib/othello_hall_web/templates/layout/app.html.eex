@@ -18,7 +18,7 @@
         <ul class="nav justify-content-end switch">
         <li>
                               <%= link "Go To Lobby",
-                                       to: page_path(@conn, :lobby),
+                                       to: page_path(@conn, :index),
                                        class: "btn btn-info btn-xs" %>
          </li>
           <li>
@@ -53,11 +53,6 @@
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
-
-      <div id="main_container">
-
-      </div>
-
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
