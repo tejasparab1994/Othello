@@ -7,6 +7,11 @@ import {RoutingContext} from 'react-router';
 import LobbyView from '../views/lobby';
 import GameView from '../views/game';
 
+// The configuration for react-redux and organization of the javascript code
+// folder structure like actions, reducers, store, views etc
+// has been inspired from this tutorial
+// https://github.com/bigardone/phoenix-battleship
+
 export default class Root extends React.Component {
     _renderRouter() {
         invariant(this.props.routerHistory,

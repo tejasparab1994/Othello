@@ -13,7 +13,7 @@ window.playerName = '<%= @current_player.name %>';
  </style>
 
 <%= if @current_player != nil do %>
-<body>
+<div>
   <div class="row" >
     <div class="col-xs-8 offset-2 text-center game-name">
       <h2>How About A New Game?</h2>
@@ -27,7 +27,7 @@ window.playerName = '<%= @current_player.name %>';
    <div id="main_container">
 
    </div>
-</body>
+</div>
 <% else %>
 <!-- Attribution for image:https://cdn.pocket-lint.com/r/s/970x/assets/images/121480-phones-news-white-nexus-4-pictures-and-hands-on-image1-enoltmopdt.jpg` -->
 <style>
@@ -37,7 +37,7 @@ body  {
   background-size: cover;
 }
 </style>
-<body class= "index_othello">
+<div class= "index_othello">
   <div class="row">
     <div class="col-xs-8 index_page text-center">
       <h1>Welcome!</h1>
@@ -53,5 +53,5 @@ body  {
       <% end %>
     </div>
   </div>
-</body>
+</div>
  <% end %>

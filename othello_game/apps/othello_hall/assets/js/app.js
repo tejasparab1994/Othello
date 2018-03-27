@@ -19,9 +19,11 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 // import socket from "./socket"
 
-// The configuration for react-redux and organization of the code
-// structure has been inspired from
-// 
+// The configuration for react-redux and organization of the javascript code
+// folder structure like actions, reducers, store, views etc
+// has been inspired from this tutorial
+// https://github.com/bigardone/phoenix-battleship
+
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
 import { createBrowserHistory } from 'history';
@@ -32,7 +34,6 @@ import Root                     from './container/root';
 const browserHistory = createBrowserHistory();
 const store  = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
-
 
 const target = document.getElementById('main_container');
 

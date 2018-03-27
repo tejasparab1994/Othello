@@ -19,7 +19,7 @@ export function registerForGame(gameChannel) {
 }
 
 export function markSquare(i, j, gameChannel)    {
-    var obj = {i: i, j: j} // Why? If I create the json object directly in the arguments
+    var obj = {i: i, j: j}
     return dispatch => {
         gameChannel.push("games:mark_square", obj).receive("ok", payload => {})
     }
