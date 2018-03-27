@@ -11,10 +11,6 @@ const loggerMiddleware = createLogger({
   collapsed: true,
 });
 
-if (process.env.NODE_ENV === `development`) {
-     middlewares.push(loggerMiddleware);
-}
-
 middlewares.push(thunkMiddleware);
 
 export default function configureStore(browserHistory) {
