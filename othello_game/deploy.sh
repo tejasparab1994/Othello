@@ -35,7 +35,7 @@ if [ -d ~/www/othello ]; then
 fi
 
 mkdir -p ~/www/othello
-REL_TAR=~/src/Othello/othello_game/_build/prod/rel/othello_game/releases/0.0.1/othello_game.tar.gz
+REL_TAR=~/src/Othello/othello_game/_build/prod/rel/othello_game/releases/0.1.0/othello_game.tar.gz
 (cd ~/www/othello && tar xzvf $REL_TAR)
 
 crontab - <<CRONTAB

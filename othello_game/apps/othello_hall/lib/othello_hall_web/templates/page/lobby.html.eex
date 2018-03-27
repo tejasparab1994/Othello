@@ -1,15 +1,23 @@
 <script>
-    window.playerName = '<%= @current_player.name %>';
+window.playerName = '<%= @current_player.name %>';
 </script>
 
 
-<div class="row" >
-  <div class="col-xs-8 offset-2 text-center game-name">
-    <h2>How About A New Game?</h2>
-    <%= form_for @conn, game_path(@conn, :create), [as: :game], fn f -> %>
+<style>
+/* Attribution for image: https://i.stack.imgur.com/jGlzr.png */
+   body {
+     background-image: url("<%= static_path(@conn, "/images/wood3.png") %>");
+   }
+ </style>
+
+<body>
+  <div class="row" >
+    <div class="col-xs-8 offset-2 text-center game-name">
+      <h2>How About A New Game?</h2>
+      <%= form_for @conn, game_path(@conn, :create), [as: :game], fn f -> %>
       <!-- <div class="form-group game-sizes">
-      </div> -->
-      <%= submit "Start Game", class: "btn btn-success btn-lg" %>
+    </div> -->
+    <%= submit "Start Game", class: "btn btn-success btn-lg" %>
     <% end %>
   </div>
 
@@ -18,3 +26,4 @@
 
   </div>
 </div>
+</body>
