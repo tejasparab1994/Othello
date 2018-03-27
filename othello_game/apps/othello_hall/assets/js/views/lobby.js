@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Socket} from "../../../../../deps/phoenix/assets/js/phoenix";
 import {fetchGames} from "../actions/lobby";
 import {ListGame} from "../components/listgame";
-import {NewGame} from "../components/newgame";
 
 
 class LobbyView extends React.Component {
@@ -45,7 +44,10 @@ class LobbyView extends React.Component {
             </div>
         );
     }
-
+    // Attribution.
+    // I would like to attribute this idea of showing the list
+    // of games in the lobby page to the underlined link.
+    // https://github.com/bigardone/phoenix-battleship
     renderCurrentGames() {
         const {games} = this.props;
 
@@ -62,7 +64,6 @@ class LobbyView extends React.Component {
     }
 
 }
-
 
 function map(state) {
     return Object.assign({}, state.lobby);
