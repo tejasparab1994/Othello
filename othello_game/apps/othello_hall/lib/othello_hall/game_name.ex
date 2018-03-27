@@ -1,6 +1,7 @@
 defmodule OthelloHall.HaikuName do
   @doc """
   Generates a unique, URL-friendly name such as "bold-frog-8249".
+  Attribution for generating game-names: https://pragmaticstudio.com/unpacked-bingo
   """
   def generate do
     [
