@@ -11,11 +11,6 @@ defmodule Othello.Game do
   alias Othello.{Game, Square, Player}
 
   def new do
-    squareBlack = Square.new("black")
-    squareWhite = Square.new("white")
-    IO.puts("inside new")
-    IO.inspect(squareBlack)
-    IO.inspect(squareWhite)
 
     squares =
       Square.new()
@@ -50,14 +45,8 @@ defmodule Othello.Game do
                       %{:i => 2, :j => 3} ->
                         %{square | i: i, disabled: false}
 
-                      #            %{:i => 2, :j => 4} ->
-                      #              %{square | i: i, disabled: false}
-
                       %{:i => 3, :j => 2} ->
                         %{square | i: i, disabled: false}
-
-                      #            %{:i => 4, :j => 2} ->
-                      #              %{square | i: i, disabled: false}
 
                       %{:i => 5, :j => 4} ->
                         %{square | i: i, disabled: false}
@@ -74,7 +63,6 @@ defmodule Othello.Game do
          )
 
     game = %Game{squares: squares}
-    IO.inspect(game)
     game
   end
 
@@ -125,27 +113,6 @@ defmodule Othello.Game do
 
   def mark_square(game, playerName, i, j) do
 
-    # First mark the squares.
-    # Put the disabled tag to true for the all the squares that have not been marked
-    #    new_squares =
-    #      game.squares
-    #      |> Enum.with_index()
-    #      |> Enum.map(
-    #           fn {squareRow, x} ->
-    #             Enum.with_index(squareRow)
-    #             |> Enum.map(
-    #                  fn {square, y} ->
-    #                    case square do
-    #                      %Square{:i => ^i, :j => ^j, disabled: false} ->
-    #                        %{square | color: game.next_turn.color, disabled: true}
-    #                      %Square{disabled: false} -> %{square | disabled: true}
-    #                      _ -> square
-    #                    end
-    #                  end
-    #                )
-    #           end
-    #         )
-
     new_squares =
       game.squares
       |> Enum.map(
@@ -164,45 +131,8 @@ defmodule Othello.Game do
            end
          )
 
-    #    possible_directions = possible_directions(game.squares, i, j, game.next_turn.color)
-    #    direction = for(row <- -1..1, col <- -1..1, do: [row, col])
-    #                |> List.delete([0, 0])
-    #
-    #    possible_directions = Enum.filter(
-    #      direction,
-    #      fn ([x, y]) -> is_possible_direction(game.squares, [x, y], i, j, game.next_turn.color)
-    #      end
-    #    )
-
     reverse_color_coordinates = reverse_color_coordinates(game.squares, i, j, game.next_turn.color)
-    #    reverse_color_coordinates = Enum.reduce(
-    #      possible_directions,
-    #      [[]],
-    #      fn (possible_direction, acc) ->
-    #        Enum.concat(
-    #          acc,
-    #          reverse_color_coordinates(new_squares, game.next_turn.color, i, j, possible_direction)
-    #        )
-    #      end
-    #    )
 
-    #    new_squares = new_squares
-    #                  |> Enum.with_index()
-    #                  |> Enum.map(
-    #                       fn {squareRow, x} ->
-    #                         Enum.with_index(squareRow)
-    #                         |> Enum.map(
-    #                              fn {square, y} ->
-    #                                if [square.i, square.j] in reverse_color_coordinates do
-    #                                  %{square | color: game.next_turn.color}
-    #                                else
-    #                                  square
-    #                                end
-    #                              end
-    #                            )
-    #                       end
-    #                     )
-    # Without index
     new_squares = new_squares
                   |> Enum.map(
                        fn squareRow ->
@@ -436,22 +366,12 @@ defmodule Othello.Game do
                        |> Enum.map(fn [row, col] -> [row + i, col + j] end)
                        |> Enum.filter(fn [row, col] -> within_bounds(row, col) end)
 
-    IO.puts "Check the possible indices for i: #{i}, j: #{j}"
-    IO.inspect possible_indices
+
     colors = Enum.reduce(
       squares,
       [],
       fn (squareRow, acc) ->
-
-        #        color = Enum.reduce(
-        #                  squareRow,
-        #                  fn (square, ) -> [square.i, square.j] in possible_indices
-        #                  end
-        #                )
-        #                |> Enum.map(fn square -> square.color end)
-        #                |> Enum.at(0)
-
-        Enum.reduce(
+          Enum.reduce(
           squareRow,
           acc,
           fn (square, acc1) ->
@@ -470,19 +390,6 @@ defmodule Othello.Game do
       end
     )
 
-    #        case square do
-    #          nil -> acc
-    #          _ -> last_color = List.last(acc)
-    #               if last_color == nil || last_color != square.color do
-    #                 acc ++ [square.color]
-    #               else
-    #                 acc
-    #               end
-    #        end
-
-    IO.puts "color:"
-    IO.inspect colors
-
     case [row, col] do
       [1, 1] -> checkColor(colors, true, color)
       [1, -1] -> checkColor(colors, true, color)
@@ -493,15 +400,6 @@ defmodule Othello.Game do
       [-1, 0] -> checkColor(colors, false, color)
       [0, -1] -> checkColor(colors, false, color)
     end
-
-    #    case Enum.at(colors, 0) do
-    #      nil -> opposite_color = Enum.at(colors, -1)
-    #             my_color = Enum.at(colors, -2)
-    #             my_color == color && opposite_color == flip_color(color)
-    #      _ -> opposite_color = Enum.at(colors, 0)
-    #           my_color = Enum.at(colors, 1)
-    #           my_color == color && opposite_color == flip_color(color)
-    #    end
   end
 
 
@@ -527,49 +425,4 @@ defmodule Othello.Game do
       "white" -> "black"
     end
   end
-
-  #  @doc """
-  #  Marks the square that has the given `phrase` for the given `player`,
-  #  updates the scores, and checks for a bingo!
-  #  """
-  #  def mark(game, phrase, player) do
-  #    game
-  #    |> update_squares_with_mark(phrase, player)
-  #    |> update_scores()
-  #
-  #    # |> assign_winner_if_bingo(player)
-  #  end
-  #
-  #  defp update_squares_with_mark(game, phrase, player) do
-  #    new_squares =
-  #      game.squares
-  #      |> List.flatten()
-  #      |> Enum.map(&mark_square_having_phrase(&1, phrase, player))
-  #      |> Enum.chunk_every(Enum.count(game.squares))
-  #
-  #    %{game | squares: new_squares}
-  #  end
-  #
-  #  defp mark_square_having_phrase(square, phrase, player) do
-  #    case square.phrase == phrase do
-  #      true -> %Square{square | marked_by: player}
-  #      false -> square
-  #    end
-  #  end
-  #
-  #  defp update_scores(game) do
-  #    scores =
-  #      game.squares
-  #      |> List.flatten()
-  #      |> Enum.reject(&is_nil(&1.marked_by))
-  #      |> Enum.map(fn s -> {s.marked_by.name, s.points} end)
-  #      |> Enum.reduce(
-  #           %{},
-  #           fn {name, points}, scores ->
-  #             Map.update(scores, name, points, &(&1 + points))
-  #           end
-  #         )
-  #
-  #    %{game | scores: scores}
-  #  end
 end
