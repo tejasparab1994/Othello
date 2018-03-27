@@ -4,13 +4,11 @@ import {Router, Route} from 'react-router';
 import { ConnectedRouter } from 'react-router-redux'
 import invariant from 'invariant';
 import {RoutingContext} from 'react-router';
-// import {MainLayout} from '../layout/index';
 import LobbyView from '../views/lobby';
 import GameView from '../views/game';
 
 export default class Root extends React.Component {
     _renderRouter() {
-        console.log("Root is called");
         invariant(this.props.routerHistory,
             '<Root /> needs either a routingContext or routerHistory to render.'
         );

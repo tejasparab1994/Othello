@@ -53,9 +53,6 @@ class LobbyView extends React.Component {
 
 
         const gamesList = games.map(game => {
-            {
-                console.log(game.name);
-            }
             return (
                 <ListGame key={game.name + game.inProgress} game={game}/>
             );
@@ -68,9 +65,7 @@ class LobbyView extends React.Component {
 
 
 function map(state) {
-    console.log("connect map is called");
     return Object.assign({}, state.lobby);
 }
 
-// export default withRouter(connect(map)(LobbyView));
 export default connect(map)(LobbyView);

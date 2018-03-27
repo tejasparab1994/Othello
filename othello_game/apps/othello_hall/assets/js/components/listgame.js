@@ -28,6 +28,5 @@ export class ListGame extends React.Component {
 
 
 function getLink(gameName) {
-    console.log("Get Link is called");
     return "/games/" + gameName;
 }

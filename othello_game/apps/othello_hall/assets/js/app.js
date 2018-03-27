@@ -18,6 +18,10 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 // import socket from "./socket"
+
+// The configuration for react-redux and organization of the code
+// structure has been inspired from
+// 
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
 import { createBrowserHistory } from 'history';
@@ -36,5 +40,3 @@ if (target != null) {
     const node = <Root routerHistory={history} store={store}/>;
     ReactDOM.render(node, target);
 }
-
-

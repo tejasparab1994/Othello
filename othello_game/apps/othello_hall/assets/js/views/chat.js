@@ -17,9 +17,6 @@ export default class Chat extends React.Component{
 
     render()    {
         const messagesList = this.props.messages.map((message, index) => {
-            {
-                console.log(message);
-            }
             return (
                 <Message key={index} message={message}/>
             );
@@ -49,10 +46,3 @@ export default class Chat extends React.Component{
         }
     }
 }
-
-// const mapStateToProps = (state, props) => {
-//     return Object.assign({}, state.chat, props)
-// }
-//
-//
-// export default connect(mapStateToProps)(Chat);

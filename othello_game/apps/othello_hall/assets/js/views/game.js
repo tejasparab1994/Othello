@@ -20,8 +20,6 @@ class Game extends React.Component {
     }
 
     render() {
-        console.log("Rendered Game");
-
         if (this.props.gameData == null) return null;
 
         return (
@@ -210,45 +208,6 @@ class OppositeTurnBoard extends Board {
           dispatch={this.props.dispatch}/>;
     }
 
-    // renderRow(r) {
-    //     var row = [];
-    //     for (var i = 0; i < 8; i++) {
-    //         row.push(this.renderSquare(r, i));
-    //     }
-    //     return (
-    //         <div key={'row' + r}>
-    //             {row}
-    //         </div>
-    //     );
-    // }
-    //
-    // renderRows() {
-    //     var rows = [];
-    //     for (var i = 0; i < 8; i++) {
-    //         rows.push(this.renderRow(i));
-    //     }
-    //     return (
-    //         <div>
-    //             {rows}
-    //         </div>
-    //     );
-    // }
-    //
-    // render() {
-    //     console.log("Opposite board is rendered");
-    //     return (
-    //         <div>
-    //           <div class="card card-header visible" id="info_board">
-    //             {this.get_info()}
-    //           </div>
-    //           {this.renderRows()}
-    //           {score_board(this.props.gameData.player1,
-    //             this.props.gameData.player2,
-    //           this.props.gameData.in_progress)}
-    //         </div>
-    //     );
-    // }
-
     get_info() {
         if (this.props.gameData.winner != null) {
             return declare_winner(this.props.gameData.winner);
@@ -268,45 +227,6 @@ class SpectatorBoard extends Board {
           dispatch={this.props.dispatch}
           clickable={false}/>;
     }
-
-    // renderRow(r) {
-    //     var row = [];
-    //     for (var i = 0; i < 8; i++) {
-    //         row.push(this.renderSquare(r, i));
-    //     }
-    //     return (
-    //         <div key={'row' + r}>
-    //             {row}
-    //         </div>
-    //     );
-    // }
-    //
-    // renderRows() {
-    //     var rows = [];
-    //     for (var i = 0; i < 8; i++) {
-    //         rows.push(this.renderRow(i));
-    //     }
-    //     return (
-    //         <div>
-    //             {rows}
-    //         </div>
-    //     );
-    // }
-    //
-    // render() {
-    //     console.log("Spectator board is rendered");
-    //     return (
-    //         <div>
-    //           <div class="card card-header visible" id="info_board">
-    //             {this.get_info()}
-    //           </div>
-    //           {this.renderRows()}
-    //           {score_board(this.props.gameData.player1,
-    //             this.props.gameData.player2,
-    //           this.props.gameData.in_progress)}
-    //         </div>
-    //     );
-    // }
 
     get_info() {
 
@@ -416,7 +336,6 @@ function score_board(player1, player2, in_progress, winner) {
 }
 
 const mapStateToProps = (state, props) => {
-    console.log(state);
     return Object.assign({}, state.game, state.chat, props);
 }
 
