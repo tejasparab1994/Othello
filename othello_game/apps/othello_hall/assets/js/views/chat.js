@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import {listen_for_messages, sendMessage} from "../actions/chat";
 import {Message} from "../components/message";
-import Infinite from 'react-infinite';
 
 
 export default class Chat extends React.Component{
