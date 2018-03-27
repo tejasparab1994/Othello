@@ -4,14 +4,20 @@ import thunkMiddleware                  from 'redux-thunk';
 import { routerMiddleware }             from 'react-router-redux';
 import reducers                         from  '../reducers';
 
+
+var middlewares = [];
 const loggerMiddleware = createLogger({
   level: 'info',
   collapsed: true,
 });
 
-export default function configureStore(browserHistory) {
-  //const reduxRouterMiddleware = routerMiddleware(browserHistory);
-  const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, loggerMiddleware)(createStore);
+if (process.env.NODE_ENV === `development`) {
+     middlewares.push(loggerMiddleware);
+}
 
+middlewares.push(thunkMiddleware);
+
+export default function configureStore(browserHistory) {
+  const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
   return createStoreWithMiddleware(reducers);
 }

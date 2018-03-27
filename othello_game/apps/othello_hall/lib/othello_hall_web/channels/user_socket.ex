@@ -22,6 +22,7 @@ defmodule OthelloHallWeb.UserSocket do
   # performing token verification on connect.
   def connect(%{"playerName" => playerName}, socket) do
     # max_age: 86400 is equivalent to one day in seconds
+    IO.puts "Connected"
     {:ok, assign(socket, :current_player, playerName)}
   end
 
@@ -29,7 +30,7 @@ defmodule OthelloHallWeb.UserSocket do
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
-  def id(socket), do: "user_socket:#{socket.assigns.current_player}"
+#  def id(socket), do: "user_socket:#{socket.assigns.current_player}"
   #
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
